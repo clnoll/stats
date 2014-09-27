@@ -1,0 +1,43 @@
+.navbar {
+  color: #428bca;
+}
+.floating-menu {
+  position:fixed;
+  text-align: center;
+  color: #1dc28d;
+  // font-family: 'Varela';
+  font-style: italic;
+  border:1px;
+  width:150px;
+  z-index:100;
+  right: 25px;
+  top: 220px;
+}
+div.floating-menu a, div.floating-menu h3 {
+  display:block;
+  margin:0 0.5em;
+}
+h3 {
+  font-size: 15px;
+}
+  // color: #428bca
+#radio {
+  margin-left: 500px;
+}
+#logo {
+  color: #1dc28d;
+  font-family: 'Varela';
+}
+.test {
+  background-image: 100%
+}
+.body {
+    position: block;
+    color: #001644;
+    // background-image: url('http://wallpaperest.com/wallpapers/lights-city-road-skyline-skyscrapers-us_066318.jpg');
+    // background-repeat: no-repeat;
+    // background-color:rgba(255,0,0,0.1)
+}
+.vals {
+  color: #1dc28d;
+}
