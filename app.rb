@@ -10,15 +10,15 @@ require_relative 'lib/renzu.rb'
 
   get '/' do
     send_file 'index.html'
-    erb :calculate
+    # erb :calculate
   end
 
-  post '/estimate' do
-    @estimate = Renzu::Calculate.new(params["input-text"]).calculate
-    erb :result
-  end
+  # post '/estimate' do
+  #   @estimate = Renzu::Calculate.new(params["input-text"]).calculate
+  #   erb :result
+  # end
 
-  get '/' do
-    redirect '/temps'
-  end
+  # get '/' do
+  #   redirect '/temps'
+  # end
 # end
