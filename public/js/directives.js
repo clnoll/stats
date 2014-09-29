@@ -51,12 +51,16 @@ app.directive('linearChart', function($window){
                xAxisGen = d3.svg.axis()
                    .scale(xScale)
                    .orient("bottom")
-                   .ticks(dataToPlot.length - 1);
+                   // .ticks(d3.time.years, 6)
+                   .tickFormat(d3.time.format('%m/%Y'))
+                   .tickSize(2)
+                   .tickPadding(8)
 
                yAxisGen = d3.svg.axis()
                    .scale(yScale)
                    .orient("left")
-                   .ticks(5);
+                   .ticks(5)
+                   .tickSize(2);
 
                lineFun = d3.svg.line()
                    .x(function (d) {
