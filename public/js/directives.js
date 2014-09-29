@@ -6,39 +6,40 @@ app.directive('linearChart', function($window){
        link: function(scope, elem, attrs){
 
           d3.csv('resources/challenge-dataset.csv', function(dataset) {
+
+            var d3 = $window.d3;
+
             // console.log(dataset)
             scope.dataset = dataset
-            scope.subset = []
+            scope.subsetVals = []
+            scope.subsetPcts = []
             scope.dataset.forEach(function(d) {
-            // var format = d3.time.format("%Y/%m/%d");
-            // var parseFormat = format.parse(d.Date);
-            // d.Date = format.parse(d.Date);
+            var format = d3.time.format("%Y/%m/%d");
+            var parseFormat = format.parse(d.Date);
+            d.Date = format.parse(d.Date);
             if (d.Metric === "DAU") {
-              d.jDate = +d.Date.slice(4,6);
               d.Value = +d.Value;
-              scope.subset.push(d)
-              console.log(d)
+              scope.subsetVals.push(d)
               }
-            // else {
-            //   d.pctJDate = +d.Date.slice(4,6);
-            //   d.pctValue = +(d.Value.substring(0, d.Value.length - 1));
-            // }
+            else {
+            //   d.pctDate = +d.Date.slice(4,6);
+              d.Value = +(d.Value.substring(0, d.Value.length - 1));
+              scope.subsetPcts.push(d)
+            }
 
             })
 
-           var dataToPlot=scope.subset;
-           var padding = 20;
+           var dataToPlot=scope.subsetVals;
+           var padding = 40;
            var pathClass="path";
            var xScale, yScale, xAxisGen, yAxisGen, lineFun;
 
-           var d3 = $window.d3;
            var rawSvg=elem.find('svg');
            var svg = d3.select(rawSvg[0]);
 
            function setChartParameters(){
-            console.log(dataToPlot)
-               xScale = d3.scale.linear()
-                   .domain([dataToPlot[0].jDate, dataToPlot[dataToPlot.length-1].jDate])
+               xScale = d3.time.scale()
+                   .domain([dataToPlot[0].Date, dataToPlot[dataToPlot.length-1].Date])
                    .range([padding + 5, rawSvg.attr("width") - padding]);
 
                yScale = d3.scale.linear()
@@ -59,7 +60,7 @@ app.directive('linearChart', function($window){
 
                lineFun = d3.svg.line()
                    .x(function (d) {
-                       return xScale(d.jDate);
+                       return xScale(d.Date);
                    })
                    .y(function (d) {
                        return yScale(d.Value);
