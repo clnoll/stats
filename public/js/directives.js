@@ -1,44 +1,91 @@
-// angular.module('appApp.directives')
-//   .directive('d3Bars', ['d3Service', function(d3Service) {
-//     return {
-//       restrict: 'EA',
-//       scope: {},
-//       link: function(scope, element, attrs) {
-//         d3Service.d3().then(function(d3) {
-//           var margin = parseInt(attrs.margin) || 20,
-//           barHeight = parseInt(attrs.barHeight) || 20,
-//           barPadding = parseInt(attrs.barPadding) || 5;
-//           var svg = d3.select(ele[0])
-//             .append('svg')
-//             .style('width', '100%');
+// Create the line chart
+app.directive('linearChart', function($window){
+   return{
+      restrict:'EA',
+      template:"<svg width='850' height='200'></svg>",
+       link: function(scope, elem, attrs){
 
-//           // Browser onresize event
-//           window.onresize = function() {
-//             scope.$apply();
-//           };
-
-//           // hard-code data
-//           scope.data = [
-//             {name: "Greg", score: 98},
-//             {name: "Ari", score: 96},
-//             {name: 'Q', score: 75},
-//             {name: "Loser", score: 48}
-//           ];
-
-//           // Watch for resize event
-//           scope.$watch(function() {
-//             return angular.element($window)[0].innerWidth;
-//           }, function() {
-//             scope.render(scope.data);
-//           });
-
-//           scope.render = function(data) {
-//               // remove all previous items before render
-//               svg.selectAll('*').remove();
+          d3.csv('resources/challenge-dataset.csv', function(dataset) {
+            // console.log(dataset)
+            scope.dataset = dataset
+            scope.dataset.forEach(function(d) {
+            // var format = d3.time.format("%Y/%m/%d");
+            // var parseFormat = format.parse(d.Date);
+            // d.Date = format.parse(d.Date);
+            d.jDate = +d.Date.slice(4,6)
+            d.Value = +d.Value;
+            })
 
 
+           var dataToPlot=scope[attrs.chartData];
+           var padding = 20;
+           var pathClass="path";
+           var xScale, yScale, xAxisGen, yAxisGen, lineFun;
 
-//             }
-//         });
-//       }};
-//   }]);
+           var d3 = $window.d3;
+           var rawSvg=elem.find('svg');
+           var svg = d3.select(rawSvg[0]);
+
+           function setChartParameters(){
+            console.log(dataToPlot)
+               xScale = d3.scale.linear()
+                   .domain([dataToPlot[0].jDate, dataToPlot[dataToPlot.length-1].jDate])
+                   .range([padding + 5, rawSvg.attr("width") - padding]);
+
+               yScale = d3.scale.linear()
+                   .domain([0, d3.max(dataToPlot, function (d) {
+                       return d.Value;
+                   })])
+                   .range([rawSvg.attr("height") - padding, 0]);
+
+               xAxisGen = d3.svg.axis()
+                   .scale(xScale)
+                   .orient("bottom")
+                   .ticks(dataToPlot.length - 1);
+
+               yAxisGen = d3.svg.axis()
+                   .scale(yScale)
+                   .orient("left")
+                   .ticks(5);
+
+               lineFun = d3.svg.line()
+                   .x(function (d) {
+                       return xScale(d.jDate);
+                   })
+                   .y(function (d) {
+                       return yScale(d.Value);
+                   })
+                   .interpolate("basis");
+           }
+
+         function drawLineChart() {
+
+               setChartParameters();
+
+               svg.append("svg:g")
+                   .attr("class", "x axis")
+                   .attr("transform", "translate(0,180)")
+                   .call(xAxisGen);
+
+               svg.append("svg:g")
+                   .attr("class", "y axis")
+                   .attr("transform", "translate(20,0)")
+                   .call(yAxisGen);
+
+               svg.append("svg:path")
+                   .attr({
+                       d: lineFun(dataToPlot),
+                       "stroke": "blue",
+                       "stroke-width": 2,
+                       "fill": "none",
+                       "class": pathClass
+                   });
+           }
+
+           drawLineChart();
+    })
+
+       }
+
+   };
+});
