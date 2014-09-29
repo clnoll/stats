@@ -8,16 +8,25 @@ app.directive('linearChart', function($window){
           d3.csv('resources/challenge-dataset.csv', function(dataset) {
             // console.log(dataset)
             scope.dataset = dataset
+            scope.subset = []
             scope.dataset.forEach(function(d) {
             // var format = d3.time.format("%Y/%m/%d");
             // var parseFormat = format.parse(d.Date);
             // d.Date = format.parse(d.Date);
-            d.jDate = +d.Date.slice(4,6)
-            d.Value = +d.Value;
+            if (d.Metric === "DAU") {
+              d.jDate = +d.Date.slice(4,6);
+              d.Value = +d.Value;
+              scope.subset.push(d)
+              console.log(d)
+              }
+            // else {
+            //   d.pctJDate = +d.Date.slice(4,6);
+            //   d.pctValue = +(d.Value.substring(0, d.Value.length - 1));
+            // }
+
             })
 
-
-           var dataToPlot=scope[attrs.chartData];
+           var dataToPlot=scope.subset;
            var padding = 20;
            var pathClass="path";
            var xScale, yScale, xAxisGen, yAxisGen, lineFun;
@@ -83,9 +92,9 @@ app.directive('linearChart', function($window){
            }
 
            drawLineChart();
-    })
+        })
 
-       }
+      }
 
    };
 });

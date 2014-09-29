@@ -30,17 +30,17 @@ app.controller('testController', ['$scope', function($scope){
 }]);
 
 app.controller('valController', ['$scope', function($scope){
-  d3.csv('resources/challenge-dataset.csv', function(dataset) {
-    // console.log(dataset)
-    $scope.dataset = dataset
-    $scope.dataset.forEach(function(d) {
-    // var format = d3.time.format("%Y/%m/%d");
-    // var parseFormat = format.parse(d.Date);
-    // d.Date = format.parse(d.Date);
-    d.jDate = +d.Date.slice(4,6)
-    d.Value = +d.Value;
-    })
-  })
+  // d3.csv('resources/challenge-dataset.csv', function(dataset) {
+  //   // console.log(dataset)
+  //   $scope.dataset = dataset
+  //   $scope.dataset.forEach(function(d) {
+  //   // var format = d3.time.format("%Y/%m/%d");
+  //   // var parseFormat = format.parse(d.Date);
+  //   // d.Date = format.parse(d.Date);
+  //   d.jDate = +d.Date.slice(4,6)
+  //   d.Value = +d.Value;
+  //   })
+  // })
 }]);
 // .filter( function(d) {
     //   if (d.Metric !== "D1") {
