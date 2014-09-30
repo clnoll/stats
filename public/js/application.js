@@ -62,7 +62,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
 
             // Use NVD3 library to add Stacked Area Chart for cumulative app use
             nv.addGraph(function() {
-                var chart = nv.models.lineWithFocusChart()
+                var chart = nv.models.lineChart()
                     .margin({
                         right: 100
                     })
