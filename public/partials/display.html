@@ -1,9 +1,9 @@
 <div class="container" ng-controller="allDataCtrl">
-<h1 id="chartTitle">Cumulative App Usage</h1>
-<h2 id="chartSubtitle">8/2013 - 9/2014</h2>
-<h2 id="chartSubtitle">DAU by {{filterOptions.selectedFilter}}</h2>
+    <h1 id="chartTitle">Cumulative App Usage</h1>
+    <h2 id="chartSubtitle">8/2013 - 9/2014</h2>
+    <h2 id="chartSubtitle">DAU by {{filterOptions.selectedFilter}}</h2>
 
-  <form class="form-inline">
+    <form class="form-inline">
         <div id="floating-menu">View by...
             <div class="row radio-inline" ng-repeat="filter in filterOptions.filters">
                 <input id="radio" type="radio" ng-model="filterOptions.selectedFilter" ng-value="filter" name="filter">
@@ -11,15 +11,9 @@
                 </label>
             </div>
         </div>
-  </form>
+    </form>
 
-<div id="chart"
-      data="subsetVals"
-        id="exampleId"
-        showXAxis="true"
-        showYAxis="true"
-        width="550"
-        height="350">
-          <svg></svg>
-</div>
+    <div id="chart" data="subsetVals" id="exampleId" showXAxis="true" showYAxis="true" width="550" height="350">
+        <svg></svg>
+    </div>
 </div>
