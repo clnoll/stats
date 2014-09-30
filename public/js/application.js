@@ -44,7 +44,6 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                 } else if ($scope.filterOptions.selectedFilter === "Platform") {
                     return d.Platform; }
             });
-
             // Map data to nested App
             chartData = nestFunction.entries(
                 dataset.map(function(d) {
@@ -63,7 +62,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
 
             // Use NVD3 library to add Stacked Area Chart for cumulative app use
             nv.addGraph(function() {
-                var chart = nv.models.stackedAreaChart()
+                var chart = nv.models.lineWithFocusChart()
                     .margin({
                         right: 100
                     })
@@ -73,10 +72,10 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                     .y(function(d) {
                         return d.y
                     }) //...in case your data is formatted differently.
-                    .useInteractiveGuideline(true) //Tooltips which show all data points. Very nice!
-                    .rightAlignYAxis(true) //Let's move the y-axis to the right side.
-                    .transitionDuration(500)
-                    .showControls(true) //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
+                    // .useInteractiveGuideline(true) //Tooltips which show all data points. Very nice!
+                    // .rightAlignYAxis(true) //Let's move the y-axis to the right side.
+                    // .transitionDuration(500)
+                    // .showControls(true) //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
                     .clipEdge(true);
 
                 //Format x-axis labels with custom function.
