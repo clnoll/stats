@@ -1,6 +1,7 @@
-<h1 id="chartTitle">Detail App Usage</h1>
-<h2 id="chartSubtitle">8/2013 - 9/2014</h2>
-<div id="chart" ng-controller="detailAppDataCtrl"
+<div ng-controller="detailAppDataCtrl">
+<h1 id="chartTitle">{{title}}</h1>
+<h2 id="chartSubtitle">{{subtitle}}</h2>
+<div id="chart"
       data="subsetVals"
         id="exampleId"
         showXAxis="true"
@@ -8,4 +9,5 @@
         width="550"
         height="350">
           <svg></svg>
+</div>
 </div>
