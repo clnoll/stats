@@ -33,7 +33,7 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
 
             chartData = nestFunction.entries(
                 dataset.map(function(d) {
-                    var format = d3.time.format("%Y/%m/%d");
+                    var format = d3.time.format("%m/%d/%Y");
                     var parseFormat = format.parse(d.Date);
                     d.Date = format.parse(d.Date);
                     d.x = d.Date;
@@ -64,7 +64,7 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
                 //Format x-axis labels with custom function.
                 chart.xAxis
                     .tickFormat(function(d) {
-                        return d3.time.format('%x')(new Date(d))
+                        return d3.time.format('%m/%Y')(new Date(d))
                     })
                     .scale()
                     .domain([dataset[0].Date, dataset[dataset.length-1].Date]);
