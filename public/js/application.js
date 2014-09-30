@@ -90,7 +90,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
 
                 chart.yAxis
                     .axisLabel("Users")
-                    .axisLabelDistance(100)
+                    // .axisLabelDistance(100)
                     .tickFormat(d3.format(',f'))
                     .scale()
                     .domain([0, datasetMax])

@@ -10,10 +10,6 @@
 #radio {
   margin-left: 500px;
 }
-.body {
-    position: block;
-    color: #001644;
-}
 #chartTitle {
   color: #428bca
   font-family: 'Varela';
@@ -23,10 +19,10 @@
   position:fixed;
   font-style: italic;
   border:1px solid gray;
+  background-color: white;
   width:100px;
-  // z-index:100;
   right: 25px;
-  top: 100px;
+  top: 90px;
 }
 .radio-inline {
   display: inline;
@@ -37,4 +33,7 @@
 }
 #radio {
   margin-left: 5px;
+}
+#chart {
+  margin-left: 20px;
 }

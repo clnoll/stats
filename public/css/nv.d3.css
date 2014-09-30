@@ -1,8 +1,6 @@
 /********************
  * HTML CSS
  */
-
-
 .chartWrap {
   margin: 0;
   padding: 0;
@@ -34,7 +32,7 @@
   z-index: 10000;
 
   font-family: Arial;
-  font-size: 13px;
+  font-size: 10px;
   text-align: left;
   pointer-events: none;
 
@@ -173,7 +171,7 @@ svg .title {
 }
 
 .nvd3.nv-noData {
-  font-size: 18px;
+  font-size: 10px;
   font-weight: bold;
 }
 
@@ -348,10 +346,12 @@ svg .title {
 }
 .nvd3.nv-pie .nv-label {
   pointer-events: none;
+  font-size: 11px;
 }
 .nvd3.nv-pie .nv-label rect {
   fill-opacity: 0;
   stroke-opacity: 0;
+  font-size: 11px;
 }
 
 /**********
@@ -562,7 +562,7 @@ svg .title {
 .nvd3.nv-bullet .nv-range.nv-s0 { fill: #eee; }
 .nvd3.nv-bullet .nv-range.nv-s1 { fill: #ddd; }
 .nvd3.nv-bullet .nv-range.nv-s2 { fill: #ccc; }
-.nvd3.nv-bullet .nv-title { font-size: 14px; font-weight: bold; }
+.nvd3.nv-bullet .nv-title { font-size: 10px; font-weight: bold; }
 .nvd3.nv-bullet .nv-subtitle { fill: #999; }
 
 
@@ -658,6 +658,7 @@ svg .title {
 
 .nvd3.nv-historicalStockChart .nv-axis .nv-axislabel {
   font-weight: bold;
+  font-size: 11px;
 }
 
 .nvd3.nv-historicalStockChart .nv-dragTarget {
