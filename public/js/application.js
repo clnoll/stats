@@ -6,7 +6,7 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
     // route for the display page
         .when('/', {
             templateUrl: 'partials/display.html',
-            controller: 'ExampleCtrl'
+            controller: 'allDataCtrl'
         })
         .when('/test', {
             templateUrl: 'partials/test.html',
@@ -15,14 +15,11 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
 })
 
 
-.controller('ExampleCtrl', ['$scope', '$window',
+.controller('allDataCtrl', ['$scope', '$window',
     function($scope, $window) {
         var d3 = $window.d3;
-
-
         d3.csv('resources/challenge-dataset.csv', function(dataset) {
             var datasetMax = 0
-
             dataset = dataset.filter(function(row) {
                 return row['Metric'] == 'DAU';
             })
@@ -63,6 +60,7 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
 
                 //Format x-axis labels with custom function.
                 chart.xAxis
+                    .axisLabel("Date")
                     .tickFormat(function(d) {
                         str = d3.time.format('%m/%Y')(new Date(d))
                         return str.substr(0,3) + str.substr(5);
@@ -71,13 +69,16 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
                     .domain([dataset[0].Date, dataset[dataset.length-1].Date]);
 
                 chart.yAxis
+                    .axisLabel("Users")
+                    .axisLabelDistance(100)
                     .tickFormat(d3.format(',f'))
                     .scale()
-                    .domain([0, datasetMax]);
+                    .domain([0, datasetMax])
 
                 d3.select('#chart svg')
                     .datum(chartData)
-                    .call(chart);
+                    .call(chart)
+                    .style({ 'width': 700, 'height': 500 });
 
                 nv.utils.windowResize(chart.update);
 
