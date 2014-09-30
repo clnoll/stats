@@ -17,35 +17,65 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
 
 .controller('ExampleCtrl', ['$scope', '$window', function($scope, $window){
     var d3 = $window.d3;
+
+
     d3.csv('resources/challenge-dataset.csv', function(dataset) {
 
-      $scope.subsetVals = [{"key": "Series 1", "values": []}]
-      $scope.subsetPcts = []
-      $scope.seriesNames = []
-      $scope.exampleData = dataset
-      $scope.exampleData.forEach(function(d) {
-        var format = d3.time.format("%Y/%m/%d");
-        var parseFormat = format.parse(d.Date);
-        d.Date = format.parse(d.Date);
-        if (d.Metric === "DAU") {
-          d.Value = +d.Value;
-          $scope.subsetVals[0].values.push([d.Date, d.Value])
-        }
-        else {
-          d.Value = +(d.Value.substring(0, d.Value.length - 1));
-          $scope.subsetPcts.push(d)
-        }
-
-      })
-      console.log($scope.subsetVals)
+      dataset = dataset.filter(function(row) {
+              return row['Metric'] == 'DAU';
+          })
+          // vis.datum(dataset).call(chart);
 
 
+      var nestFunction = d3.nest().key(function(d){return d.App;});
+
+      chartData = nestFunction.entries(
+
+                      dataset.map(function(d){
+                        var format = d3.time.format("%Y/%m/%d");
+                        var parseFormat = format.parse(d.Date);
+                        d.Date = format.parse(d.Date);
+
+
+                         d.x = d.Date;
+
+                    if (d.Metric === "DAU") {
+
+                         d.y = +d.Value;
+                       }
+                    // else {d.Value = +(d.Value.substring(0, d.Value.length - 1));}
+                         return d;
+                     })
+                    // }
+                  );
+
+
+
+      // $scope.subsetVals = [{"key": "Series 1", "values": [], "tags": []}]
+      // $scope.subsetPcts = []
+      // $scope.seriesNames = []
+      // $scope.exampleData = dataset
+      // $scope.exampleData.forEach(function(d) {
+      //   var format = d3.time.format("%Y/%m/%d");
+      //   var parseFormat = format.parse(d.Date);
+      //   d.Date = format.parse(d.Date);
+      //   if (d.Metric === "DAU") {
+      //     d.Value = +d.Value;
+      //     $scope.subsetVals[0].values.push([d.Date, d.Value])
+      //   }
+      //   else {
+      //     d.Value = +(d.Value.substring(0, d.Value.length - 1));
+      //     $scope.subsetPcts.push(d)
+      //   }
+
+      // })
 
       nv.addGraph(function() {
+
           var chart = nv.models.stackedAreaChart()
                         .margin({right: 100})
-                        .x(function(d) { return d[0] })   //We can modify the data accessor functions...
-                        .y(function(d) { return d[1] })   //...in case your data is formatted differently.
+                        .x(function(d) { return d.x })   //We can modify the data accessor functions...
+                        .y(function(d) { return d.y })   //...in case your data is formatted differently.
                         .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
                         .rightAlignYAxis(true)      //Let's move the y-axis to the right side.
                         .transitionDuration(500)
@@ -62,7 +92,7 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
               .tickFormat(d3.format(',.2f'));
 
           d3.select('#chart svg')
-            .datum($scope.subsetVals)
+            .datum(chartData)
             .call(chart);
 
           nv.utils.windowResize(chart.update);
