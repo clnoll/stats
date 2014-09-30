@@ -2,23 +2,10 @@
   color: #428bca
   font-family: 'Varela';
 }
-.nav {
-  color: #1dc28d;
-  background-color: black
-}
-.navbar {
-  background-color: black
-}
+
 #navcontainer {
   background-color: black;
   width: 100%
-}
-
-.navbar-header {
-  background-color: black
-}
-.navbar .navbar-default {
-  background-color: black
 }
 #radio {
   margin-left: 500px;
@@ -31,4 +18,27 @@
   color: #428bca
   font-family: 'Varela';
   float: center;
+}
+#floating-menu {
+  position:fixed;
+  font-style: italic;
+  border:1px solid gray;
+  width:100px;
+  // z-index:100;
+  right: 25px;
+  top: 100px;
+}
+.radio-inline {
+  display: inline;
+  padding-right: 10px;
+  margin-left: 10px;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+.radio.inline {
+  // padding-left: 10px;
+  // margin-left: 10px;
+}
+#radio {
+  margin-left: 5px;
 }
