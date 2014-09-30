@@ -9,7 +9,15 @@
 .navbar {
   background-color: black
 }
+#navcontainer {
+  background-color: black;
+  width: 100%
+}
+
 .navbar-header {
+  background-color: black
+}
+.navbar .navbar-default {
   background-color: black
 }
 #radio {
@@ -23,7 +31,4 @@
   color: #428bca
   font-family: 'Varela';
   float: center;
-}
-#navcontainer {
-  background-color: black;
 }
