@@ -1,13 +1,11 @@
-<div class="container">
+<div class="container" ng-controller="allDataCtrl">
 <h1 id="chartTitle">Cumulative App Usage</h1>
 <h2 id="chartSubtitle">8/2013 - 9/2014</h2>
 <h2 id="chartSubtitle">DAU by {{filterOptions.selectedFilter}}</h2>
-<div class="container" ng-controller="allDataCtrl">
 
   <form>
         <div class="container">
-            <label for="filter">Filter</label>
-            <div class="radio inline" ng-repeat="filter in filterOptions.filters">
+            <div class="radio .col-md-3" ng-repeat="filter in filterOptions.filters">
                 <input type="radio" ng-model="filterOptions.selectedFilter" ng-value="filter" name="filter">
                 <label class="radio inline" for="{{filter}}">{{filter}}
                 </label>
@@ -23,6 +21,5 @@
         width="550"
         height="350">
           <svg></svg>
-</div>
 </div>
 </div>
