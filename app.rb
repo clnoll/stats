@@ -1,10 +1,10 @@
 require 'sinatra'
 require_relative 'lib/renzu.rb'
 
-class Renzu::App < Sinatra::Application
-  configure :development do |c|
-    c.set :bind, '10.10.10.10'
-  end
+# class Renzu::App < Sinatra::Application
+#   configure :development do |c|
+#     c.set :bind, '10.10.10.10'
+#   end
 
   set :bind, '10.10.10.10'
 
@@ -12,4 +12,4 @@ class Renzu::App < Sinatra::Application
     send_file 'index.html'
     # erb :calculate
   end
-end
+# end
