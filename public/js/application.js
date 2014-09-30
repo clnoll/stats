@@ -8,9 +8,9 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
             templateUrl: 'partials/display.html',
             controller: 'allDataCtrl'
         })
-        .when('/test', {
-            templateUrl: 'partials/test.html',
-            controller: 'testController'
+        .when('/detail', {
+            templateUrl: 'partials/appDetails.html',
+            controller: 'detailAppDataCtrl'
         })
 })
 
@@ -86,4 +86,12 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
             });
         })
     }
+])
+
+.controller('detailAppDataCtrl', [
+
+
+
+
+
 ])
