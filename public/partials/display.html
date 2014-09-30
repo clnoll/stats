@@ -1,5 +1,26 @@
 <!-- <div ng-controller="valController" class="container" id="calc"> -->
 
-<div linear-chart chart-data="dataset"></div>
+<!-- <div linear-chart chart-data="dataset"></div> -->
 
 <!-- </div> -->
+<!-- <div id="d3multiline" angulard3-multiline-chart datacsv="'dataset.csv'"
+                    xaxis-name = ""
+                    xaxis-pos = ""
+                    yaxis-name = "'Value'"
+                    yaxis-pos = "12"
+                    d3-format= "'%Y%m%d'"> -->
+<!-- angular directive is angulard3-multiline-chart -->
+<!-- directive variables are xaxis-name,yaxis-name,xaxis-pos,yaxis-pos,y axis data format(d3-format)
+and finally the datajson variable which is holding the external data source -->
+<!-- </div> -->
+<!-- <div id="chart" ng-controller="valController"></div> -->
+
+<div id="chart" ng-controller="ExampleCtrl"
+      data="subsetVals"
+        id="exampleId"
+        showXAxis="true"
+        showYAxis="true"
+        width="550"
+        height="350">
+          <svg></svg>
+</div>
