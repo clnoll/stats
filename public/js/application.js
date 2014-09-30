@@ -20,12 +20,9 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
 
 
     d3.csv('resources/challenge-dataset.csv', function(dataset) {
-
       dataset = dataset.filter(function(row) {
               return row['Metric'] == 'DAU';
           })
-          // vis.datum(dataset).call(chart);
-
 
       var nestFunction = d3.nest().key(function(d){return d.App;});
 
@@ -35,14 +32,8 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
                         var format = d3.time.format("%Y/%m/%d");
                         var parseFormat = format.parse(d.Date);
                         d.Date = format.parse(d.Date);
-
-
                          d.x = d.Date;
-
-                    if (d.Metric === "DAU") {
-
                          d.y = +d.Value;
-                       }
                     // else {d.Value = +(d.Value.substring(0, d.Value.length - 1));}
                          return d;
                      })
