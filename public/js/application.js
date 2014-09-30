@@ -64,7 +64,8 @@ angular.module("nvd3TestApp", ['nvd3ChartDirectives', 'ngRoute'])
                 //Format x-axis labels with custom function.
                 chart.xAxis
                     .tickFormat(function(d) {
-                        return d3.time.format('%m/%Y')(new Date(d))
+                        str = d3.time.format('%m/%Y')(new Date(d))
+                        return str.substr(0,3) + str.substr(5);
                     })
                     .scale()
                     .domain([dataset[0].Date, dataset[dataset.length-1].Date]);
