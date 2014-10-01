@@ -76,7 +76,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                     var parseFormat = format.parse(d.Date);
                     d.Date = format.parse(d.Date);
                     // Assign x and y variables for import into chart
-                    d.key = d.Date;
+                    d.x = d.Date;
                     d.y = +d.Value; // + changes value to a number
                     // Track max value of dataset
                     if (d.y > datasetMax) { datasetMax = d.y }
@@ -91,7 +91,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                         right: 100
                     })
                     .x(function(d) {
-                        return d.key
+                        return new Date(d.key)
                     }) //We can modify the data accessor functions...
                     .y(function(d) {
                         return d.values
