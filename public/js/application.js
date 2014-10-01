@@ -29,7 +29,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
 
         // Pull in csv file with d3
         d3.csv('resources/challenge-dataset.csv', function(dataset) {
-            // Set max variable for use in chart
+            // Set max variable for chart scaling (updated in chartData.map)
             var datasetMax = 0
             // Filter dataset to return values rather than percentages
             dataset = dataset.filter(function(row) {

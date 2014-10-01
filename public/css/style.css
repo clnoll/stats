@@ -37,3 +37,6 @@
 #chart {
   margin-left: 20px;
 }
+.nvtooltip * {
+  font-size: 11px
+}
