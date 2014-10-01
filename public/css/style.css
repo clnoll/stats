@@ -37,3 +37,23 @@ h2 {
     display: inline;
     border: 1px solid blue;
 }
+.nvd3-bullet-chart1 {
+  background-color: gray;
+  padding: 10px;
+  display: inline;
+  width: 50%
+}
+.nvd3-pie-chart1 {
+  background-color: gray;
+  padding: 10px;
+  display: inline;
+  width: 25%
+}
+#line-dau {
+  width: 60%
+  display: inline
+}
+#line-r {
+  width: 60%
+  display: inline
+}

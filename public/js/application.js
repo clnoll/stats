@@ -31,6 +31,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
 
         // Assign filter to the scope by watching changes to the $scope.filterOptions object
        $scope.$watchCollection("filterOptions", function(newVal, oldVal, scope) {
+            if (newVal !== oldVal) {
             console.log('change!')
            // scope.filterOptions.selectedFilter = newVal;
 
@@ -89,6 +90,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                 if (d.Metric === "DAU") { d.y = +d.Value; }
                 else if (d.Metric === "D1 Retention") {
                     var str = d.Value
+                    d.x = d.Platform
                     d.y = +(str.substring(0, str.length-1)) // remove % sign and change string to numerical value
                         }
                 return d;
@@ -196,26 +198,42 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
             // Function to get DAU detail charts (by App)
             var getDauDetails = function(dataset) {
                 // Create stats object to house data for charts
-                var stats = { totalDAU: 0, minDailyValue: 0, maxDailyValue: 0 }
-
+                var stats = { totalDAU: 0,
+                    minDailyValue: 0,
+                    maxDailyValue: 0,
+                    iOSMinDailyValue: 0,
+                    iOSMaxDailyValue: 0,
+                    androidMinDailyValue: 0,
+                    androidMaxDailyValue: 0
+                     }
                 // Reorganize data by platform
-                var nestFunction = d3.nest().key(function(d) { return d.Platform; })
+                var nestFunction = d3.nest().key(function(d) {
+                    val = parseInt(d.Value)
+                    if (d.Platform === "iOS") {
+                        if (stats.iOSMinDailyValue == 0 || val < stats.iOSMinDailyValue) {
+                            stats.iOSMinDailyValue = val;
+                        }
+                        if (val > stats.iOSMaxDailyValue) {
+                            stats.iOSMaxDailyValue = val;
+                        }
+                    }
+                    else if (d.Platform === "Android") {
+                        if (stats.androidMinDailyValue == 0 || val < stats.androidMinDailyValue) {
+                            stats.androidMinDailyValue = val;
+                        }
+                        if (val > stats.androidMaxDailyValue) {
+                            stats.androidMaxDailyValue = val;
+                        }
+                    }
+                    return d.Platform; })
 
                 // Sum values by category
                 var rollup = nestFunction.rollup(function(d) {
-                    val = parseInt(d[0].Value)
-                    stats.minDailyValue = val;
-                    stats.maxDailyValue = val;
-                    for (i = 0; i < d.length; i++) {
-                        val = parseInt(d[i].Value)
-                        if (val < stats.minDailyValue) {
-                            stats.minDailyValue = val;
-                        }
-                        if (val > stats.maxDailyValue) {
-                            stats.maxDailyValue = val;
-                        }
-                        i += 1
-                    }
+                    if (d[d.length-1].Platform === "iOS") { stats.iOSLatest = parseInt(d[d.length-1].Value) }
+                    else if (d[d.length-1].Platform === "Android") { stats.androidLatest = parseInt(d[d.length-1].Value) }
+                    if (d[d.length-2].Platform === "iOS") { stats.iOSLatest = parseInt(d[d.length-1].Value) }
+                    else if (d[d.length-2].Platform === "Android") { stats.androidLatest = parseInt(d[d.length-2].Value) }
+
                     return d3.sum(d, function(g) {
                         return +g.y;
                     })
@@ -228,16 +246,24 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                     })
                 );
 
+                // Calculate stats
                 for (item in chartDAUData) {
                     var objKey = chartDAUData[item].key;
                     stats[objKey] = chartDAUData[item].values;
                     stats.totalDAU += chartDAUData[item].values;
                 }
-
+                stats.minDailyValue = stats.iOSMinDailyValue + stats.androidMinDailyValue;
+                stats.maxDailyValue = stats.iOSMaxDailyValue + stats.androidMaxDailyValue;
+                stats.meanDailyValue = parseInt((stats.minDailyValue + stats.maxDailyValue)/2)
+                stats.latestValue = stats.iOSLatest + stats.androidLatest
+                // Global variable to increment class
+                var i = 1
+                // Generate bullet chart
                 nv.addGraph(function() {
                       var chart = nv.models.bulletChart();
-
-                      d3.select('#chart svg')
+                      d3.select('.nvd3-bullet-chart' + i)
+                          .append('svg')
+                          .attr('class', 'nvd3-bullet-chart1')
                           .datum(exampleData())
                           .transition().duration(1000)
                           .call(chart);
@@ -245,35 +271,59 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                       return chart;
                     });
 
+                // Generate pie chart
+                nv.addGraph(function() {
+                  var pieChart = nv.models.pieChart()
+                      .x(function(d) {
+                        return d.key })
+                      .y(function(d) {
+                        return d.values })
+                      .showLabels(true);
+
+                    d3.select(".nvd3-pie-chart" + i)
+                        .append('svg')
+                        .datum(chartDAUData)
+                        .transition().duration(350)
+                        .call(pieChart);
+
+                  return pieChart;
+                });
+
                 function exampleData() {
                     return {
                         "title":"DAU",
                         "subtitle":"8/2013 - 9/2014",
-                        "ranges":[150,225,300],  //Minimum, mean and maximum values.
-                        "measures":[220],        //Value representing current measurement (the thick blue line in the example)
-                        "markers":[250]          //Place a marker on the chart (the white triangle marker)
+                        "ranges":[stats.minDailyValue,stats.meanDailyValue,stats.maxDailyValue],  //Minimum, mean and maximum values.
+                        "measures":[stats.maxDailyValue],        //Value representing current measurement (the thick blue line in the example)
+                        "markers":[stats.latestValue]          //Place a marker on the chart (the white triangle marker)
                       };
                     }
 
+                    i += 1
 
-            }
-
-            // Function to get Retention detail charts (by App)
-            var getRetentionDetails = function(dataset) {
 
             }
 
         // Call functions to create the overview charts
         getDau(dataset);
         getRetention(retention);
-        for (app in $scope.appOptions.apps) {
-            var dataset = dataset.filter(function(row) {
-                return row['App'] == $scope.appOptions.apps[app];
+        // for (app in $scope.appOptions.apps) {
+        //     var dataset = dataset.filter(function(row) {
+        //         return row['App'] == $scope.appOptions.apps[parseInt(app)];
+        //     });
+        //     getDauDetails(dataset);
+        // }
+        var cbData = dataset.filter(function(row) {
+                return row['App'] == 'CandyBash';
             });
-            getDauDetails(dataset);
-            getRetentionDetails(retention);
-        }
+        getDauDetails(cbData);
+
+
+        //         $scope.appOptions = {
+        //     apps: ['CandyBash', 'Words with Enemies', 'Crappy Birds', 'Zuber', 'Carry']
+        // }
         })
+}
      })
     }
 ])

@@ -1,8 +1,9 @@
 <div class="container" ng-controller="allDAUCtrl">
     <div class="container">
         <h1 id="chartTitle">App Stats 8/2013 - 9/2014</h1>
+        <hr>
     </div>
-
+<div class=".col-xs-12 .col-sm-6 .col-lg-8">
     <form class="form-inline">
         <div id="view-menu">Stats by
             <div class="view-menu" ng-repeat="filter in filterOptions.filters">
@@ -20,11 +21,46 @@
     <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true" >
         <svg></svg>
     </div>
-
-<!--     <div id="detail-chart" data="subsetVals" showXAxis="true" showYAxis="true" >
+</div>
+<!--     <div class="nvd3-bullet-chart" id="bullet-chart" data="subsetVals" showXAxis="true" showYAxis="true" >
         <svg></svg>
     </div> -->
-</div>
+    <div class="nvd3-bullet-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+        <svg></svg>
+    </div>
 
+    <div class="nvd3-pie-chart1" id="chart"></div>
+        <svg></svg>
+    </div>
 
+    <div class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+        <svg></svg>
+    </div>
 
+    <div class="nvd3-pie-chart2" id="chart"></div>
+        <svg></svg>
+    </div>
+
+        <div class="nvd3-bullet-chart3" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+        <svg></svg>
+    </div>
+
+    <div class="nvd3-pie-chart3" id="chart"></div>
+        <svg></svg>
+    </div>
+
+        <div class="nvd3-bullet-chart4" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+        <svg></svg>
+    </div>
+
+    <div class="nvd3-pie-chart4" id="chart"></div>
+        <svg></svg>
+    </div>
+
+        <div class="nvd3-bullet-chart5" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+        <svg></svg>
+    </div>
+
+    <div class="nvd3-pie-chart5" id="chart"></div>
+        <svg></svg>
+    </div>
