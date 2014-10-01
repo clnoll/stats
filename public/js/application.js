@@ -35,7 +35,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
             dataset = dataset.filter(function(row) {
                 return row['Metric'] == 'DAU';
             })
-            // Use d3's nest method to reorganize data by the selected filter
+            // Use d3's nest method to reorganize data by the selected filter and date
             var nestFunction = d3.nest().key(function(d) {
                 if ($scope.filterOptions.selectedFilter === "App") {
                     return d.App;
@@ -43,25 +43,11 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                     return d.Category;
                 } else if ($scope.filterOptions.selectedFilter === "Platform") {
                     return d.Platform; }
-            })
-            .key(function(d) {
+            }).key(function(d) {
                 return d.Date
             })
-//             .rollup(function(d) {
-//                 return d3.sum(d, function(g) {
-//                     return +g.Value;
-//                 })
-//                 // if ($scope.filterOptions.selectedFilter === "App") {
-//                 //     // return d.App;
-//                 //     return {
 
-//                 //     }
-//                 // } else if ($scope.filterOptions.selectedFilter === "Category") {
-//                 //     // return d.Category;
-//                 // } else if ($scope.filterOptions.selectedFilter === "Platform") {
-//                 //     // return d.Platform; }
-//             });
-// var i = 0
+            // Sum values by category and date
             var rollup = nestFunction.rollup(function(d) {
                 return d3.sum(d, function(g) {
                     return +g.y
