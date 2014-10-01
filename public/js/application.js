@@ -16,7 +16,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
 
 .controller('allDAUCtrl', ['$scope',
     function($scope) {
-        // Set filter options
+        // Set filter options - outside of D3 due to asynchronicity
         $scope.filterOptions = {
             filters: ['App', 'Category', 'Platform'],
             selectedFilter: 'App'
@@ -24,6 +24,9 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
         $scope.metricOptions = {
             metrics: ['D1 Retention', 'DAU'],
             selectedMetric: 'DAU'
+        }
+        $scope.appOptions = {
+            apps: ['CandyBash', 'Words with Enemies', 'Crappy Birds', 'Zuber', 'Carry']
         }
 
         // Assign filter to the scope by watching changes to the $scope.filterOptions object
@@ -37,7 +40,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
             var startDate = dataset[0].Date;
             var endDate = dataset[dataset.length-1].Date;
 
-            // Set dimensions for charts
+            // Set dimensions for aggregate charts
             var dimensions = { 'width': 600, 'height': 200 }
 
             // Filter dataset to return Retention
@@ -79,6 +82,15 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                     var str = d.Value
                     d.y = +(str.substring(0, str.length-1)) // remove % sign and change string to numerical value
                 }
+                return d;
+            }
+
+            var entriesDetailFxn = function(d) {
+                if (d.Metric === "DAU") { d.y = +d.Value; }
+                else if (d.Metric === "D1 Retention") {
+                    var str = d.Value
+                    d.y = +(str.substring(0, str.length-1)) // remove % sign and change string to numerical value
+                        }
                 return d;
             }
 
@@ -181,10 +193,86 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                 });
             }
 
+            // Function to get DAU detail charts (by App)
+            var getDauDetails = function(dataset) {
+                // Create stats object to house data for charts
+                var stats = { totalDAU: 0, minDailyValue: 0, maxDailyValue: 0 }
+
+                // Reorganize data by platform
+                var nestFunction = d3.nest().key(function(d) { return d.Platform; })
+
+                // Sum values by category
+                var rollup = nestFunction.rollup(function(d) {
+                    val = parseInt(d[0].Value)
+                    stats.minDailyValue = val;
+                    stats.maxDailyValue = val;
+                    for (i = 0; i < d.length; i++) {
+                        val = parseInt(d[i].Value)
+                        if (val < stats.minDailyValue) {
+                            stats.minDailyValue = val;
+                        }
+                        if (val > stats.maxDailyValue) {
+                            stats.maxDailyValue = val;
+                        }
+                        i += 1
+                    }
+                    return d3.sum(d, function(g) {
+                        return +g.y;
+                    })
+                });
+
+                // Map data to nested App
+                var chartDAUData = rollup.entries(
+                    dataset.map(function(d) {
+                        return entriesDetailFxn(d);
+                    })
+                );
+
+                for (item in chartDAUData) {
+                    var objKey = chartDAUData[item].key;
+                    stats[objKey] = chartDAUData[item].values;
+                    stats.totalDAU += chartDAUData[item].values;
+                }
+
+                nv.addGraph(function() {
+                      var chart = nv.models.bulletChart();
+
+                      d3.select('#chart svg')
+                          .datum(exampleData())
+                          .transition().duration(1000)
+                          .call(chart);
+
+                      return chart;
+                    });
+
+                function exampleData() {
+                    return {
+                        "title":"DAU",
+                        "subtitle":"8/2013 - 9/2014",
+                        "ranges":[150,225,300],  //Minimum, mean and maximum values.
+                        "measures":[220],        //Value representing current measurement (the thick blue line in the example)
+                        "markers":[250]          //Place a marker on the chart (the white triangle marker)
+                      };
+                    }
+
+
+            }
+
+            // Function to get Retention detail charts (by App)
+            var getRetentionDetails = function(dataset) {
+
+            }
+
         // Call functions to create the overview charts
         getDau(dataset);
         getRetention(retention);
-
+        for (app in $scope.appOptions.apps) {
+            var dataset = dataset.filter(function(row) {
+                return row['App'] == $scope.appOptions.apps[app];
+            });
+            getDauDetails(dataset);
+            getRetentionDetails(retention);
+        }
         })
      })
     }
