@@ -1,7 +1,9 @@
-<div class="container" ng-controller="allDataCtrl">
+<div class="container">
     <h1 id="chartTitle">App Usage</h1>
     <h2 id="chartSubtitle">8/2013 - 9/2014</h2>
-    <h2 id="chartSubtitle">DAU by {{filterOptions.selectedFilter}}</h2>
+</div>
+<div class="container" ng-controller="allDAUCtrl">
+    <h2 id="chartSubtitle">{{metricOptions.selectedMetric}} by {{filterOptions.selectedFilter}}</h2>
 
     <form class="form-inline">
         <div id="floating-menu">View by...
@@ -13,7 +15,14 @@
         </div>
     </form>
 
-    <div id="chart" data="subsetVals" id="exampleId" showXAxis="true" showYAxis="true" width="750" height="400" viewbox="1000">
+    <div id="dau-chart" data="subsetVals" showXAxis="true" showYAxis="true" >
+        <svg></svg>
+    </div>
+
+    <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true" >
         <svg></svg>
     </div>
 </div>
+
+
+

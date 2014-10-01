@@ -6,7 +6,7 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
     // route for the display page
         .when('/', {
             templateUrl: 'partials/display.html',
-            controller: 'allDataCtrl'
+            controller: 'allDAUCtrl'
         })
         .when('/detail', {
             templateUrl: 'partials/appDetails.html',
@@ -14,12 +14,16 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
         })
 })
 
-.controller('allDataCtrl', ['$scope',
+.controller('allDAUCtrl', ['$scope',
     function($scope) {
         // Set filter options
         $scope.filterOptions = {
             filters: ['App', 'Category', 'Platform'],
             selectedFilter: 'App'
+        }
+        $scope.metricOptions = {
+            metrics: ['D1 Retention', 'DAU'],
+            selectedMetric: 'DAU'
         }
 
         // Assign filter to the scope by watching changes to the $scope.filterOptions object
@@ -29,12 +33,23 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
 
         // Pull in csv file with d3
         d3.csv('resources/challenge-dataset.csv', function(dataset) {
-            // Set max variable for chart scaling (updated in chartData.map)
-            var datasetMax = 0
-            // Filter dataset to return values rather than percentages
-            dataset = dataset.filter(function(row) {
+            // Set start and end dates for dataset
+            var startDate = dataset[0].Date;
+            var endDate = dataset[dataset.length-1].Date;
+
+            // Set dimensions for charts
+            var dimensions = { 'width': 600, 'height': 200 }
+
+            // Filter dataset to return Retention
+            var retention = dataset.filter(function(row) {
+                return row['Metric'] == 'D1 Retention';
+            });
+
+            // Filter dataset to return DAU
+            var dataset = dataset.filter(function(row) {
                 return row['Metric'] == 'DAU';
-            })
+            });
+
             // Use d3's nest method to reorganize data by the selected filter and date
             var nestFunction = d3.nest().key(function(d) {
                 if ($scope.filterOptions.selectedFilter === "App") {
@@ -47,73 +62,129 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                 return d.Date
             })
 
-            // Sum values by category and date
-            var rollup = nestFunction.rollup(function(d) {
-                return d3.sum(d, function(g) {
-                    return +g.y
-                })
-            });
+            var dateLabels = function(d) {
+                str = d3.time.format('%m/%Y')(new Date(d))
+                return str.substr(0,3) + str.substr(5);
+            }
 
-            // Map data to nested App
-            var chartData = rollup.entries(
-                dataset.map(function(d) {
-                    // Parse date values to JavaScript date object
-                    var format = d3.time.format("%m/%d/%Y");
-                    var parseFormat = format.parse(d.Date);
-                    d.Date = format.parse(d.Date);
-                    // Assign x and y variables for import into chart
-                    d.x = d.Date;
-                    d.y = +d.Value; // + changes value to a number
-                    // Track max value of dataset
-                    if (d.y > datasetMax) { datasetMax = d.y }
-                    return d;
-                })
-            );
+            var entriesFxn = function(d) {
+                // Parse date values to JavaScript date object
+                var format = d3.time.format("%m/%d/%Y");
+                var parseFormat = format.parse(d.Date);
+                d.Date = format.parse(d.Date);
+                // Assign x and y variables for import into chart
+                d.x = d.Date;
+                if (d.Metric === "DAU") { d.y = +d.Value; }
+                else if (d.Metric === "D1 Retention") {
+                    var str = d.Value
+                    d.y = +(str.substring(0, str.length-1)) // remove % sign and change string to numerical value
+                }
+                return d;
+            }
 
-            // Use NVD3 library to add Stacked Area Chart for cumulative app use
-            nv.addGraph(function() {
-                var chart = nv.models.lineChart()
-                    .margin({
-                        right: 100
+            // Function to get DAU charts
+            var getDau = function(dataset) {
+                var datasetMax = 0
+                // Sum values by category and date
+                var rollup = nestFunction.rollup(function(d) {
+                    return d3.sum(d, function(g) {
+                        return +g.y
                     })
-                    .x(function(d) {
-                        return new Date(d.key)
-                    }) //We can modify the data accessor functions...
-                    .y(function(d) {
-                        return d.values
-                    }) //...in case your data is formatted differently.
-                    // .useInteractiveGuideline(true) //Tooltips which show all data points. Very nice!
-                    // .rightAlignYAxis(true) //Let's move the y-axis to the right side.
-                    // .transitionDuration(500)
-                    // .showControls(true) //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
-                    .clipEdge(true);
+                });
 
-                //Format x-axis labels with custom function.
-                chart.xAxis
-                    .axisLabel("Date")
-                    .tickFormat(function(d) {
-                        str = d3.time.format('%m/%Y')(new Date(d))
-                        return str.substr(0,3) + str.substr(5);
+                // Map data to nested App
+                var chartDAUData = rollup.entries(
+                    dataset.map(function(d) {
+                        if (d.y > datasetMax) { datasetMax = d.y }
+                        return entriesFxn(d);
                     })
-                    .scale()
-                    .domain([dataset[0].Date, dataset[dataset.length-1].Date]);
+                );
 
-                chart.yAxis
-                    .axisLabel("Users")
-                    // .axisLabelDistance(100)
-                    .tickFormat(d3.format(',f'))
-                    .scale()
-                    .domain([0, datasetMax])
+                // Use NVD3 library to add Line Chart for cumulative app use
+                nv.addGraph(function() {
+                    var chart = nv.models.lineChart()
+                        .margin({ right: 100 })
+                        .x(function(d) { return new Date(d.key) })
+                        .y(function(d) { return d.values })
+                        .useInteractiveGuideline(true)
+                        .clipEdge(true);
 
-                d3.select('#chart svg')
-                    .datum(chartData)
-                    .call(chart)
-                    .style({ 'width': 700, 'height': 500 });
+                    chart.xAxis
+                        .axisLabel("Date")
+                        .tickFormat(function(d) { return dateLabels(d); })
+                        .scale()
+                        .domain([startDate, endDate]);
 
-                nv.utils.windowResize(chart.update);
+                    chart.yAxis
+                        .axisLabel("Users")
+                        // .axisLabelDistance(100)
+                        .tickFormat(d3.format(',f'))
+                        .scale()
+                        .domain([0, datasetMax])
 
-                return chart;
-            });
+                    d3.select('#dau-chart svg')
+                        .datum(chartDAUData)
+                        .call(chart)
+                        .style(dimensions);
+
+                    nv.utils.windowResize(chart.update);
+                    return chart;
+                });
+            }
+
+            // Function to get Retention charts
+            var getRetention = function(dataset) {
+                // Get avg percentages by category and date
+                var rollup = nestFunction.rollup(function(d) {
+                    return d3.mean(d, function(g) {
+                        return +g.y
+                    })
+                });
+
+                // Map data to nested App
+                var chartRetentionData = rollup.entries(
+                    dataset.map(function(d) {
+                        return entriesFxn(d);
+                    })
+                );
+
+                // Use NVD3 library to add Line Chart for cumulative app use
+                nv.addGraph(function() {
+                    var chart = nv.models.lineChart()
+                        .margin({ right: 100 })
+                        .x(function(d) { return new Date(d.key) })
+                        .y(function(d) { return d.values })
+                        .useInteractiveGuideline(true)
+                        .clipEdge(true);
+
+                    chart.xAxis
+                        .axisLabel("Date")
+                        .tickFormat(function(d) { return dateLabels(d); })
+                        .scale()
+                        .domain([startDate, endDate]);
+
+                    chart.yAxis
+                        .axisLabel("% Retention")
+                        // .axisLabelDistance(100)
+                        .tickFormat(d3.format(',f'))
+                        .scale()
+                        .domain([0, 100])
+
+                    d3.select('#retention-chart svg')
+                        .datum(chartRetentionData)
+                        .call(chart)
+                        .style(dimensions);
+
+                    nv.utils.windowResize(chart.update);
+
+                    return chart;
+                });
+            }
+
+        // Call functions to create the overview charts
+        getDau(dataset);
+        getRetention(retention);
+
         })
      })
     }

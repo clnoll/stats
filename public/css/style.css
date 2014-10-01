@@ -38,5 +38,8 @@
   margin-left: 20px;
 }
 .nvtooltip * {
-  font-size: 11px
+  font-size: 11px;
+}
+h2 {
+  font-size: 15px;
 }
