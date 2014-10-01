@@ -43,16 +43,40 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                     return d.Category;
                 } else if ($scope.filterOptions.selectedFilter === "Platform") {
                     return d.Platform; }
+            })
+            .key(function(d) {
+                return d.Date
+            })
+//             .rollup(function(d) {
+//                 return d3.sum(d, function(g) {
+//                     return +g.Value;
+//                 })
+//                 // if ($scope.filterOptions.selectedFilter === "App") {
+//                 //     // return d.App;
+//                 //     return {
+
+//                 //     }
+//                 // } else if ($scope.filterOptions.selectedFilter === "Category") {
+//                 //     // return d.Category;
+//                 // } else if ($scope.filterOptions.selectedFilter === "Platform") {
+//                 //     // return d.Platform; }
+//             });
+// var i = 0
+            var rollup = nestFunction.rollup(function(d) {
+                return d3.sum(d, function(g) {
+                    return +g.y
+                })
             });
+
             // Map data to nested App
-            chartData = nestFunction.entries(
+            var chartData = rollup.entries(
                 dataset.map(function(d) {
                     // Parse date values to JavaScript date object
                     var format = d3.time.format("%m/%d/%Y");
                     var parseFormat = format.parse(d.Date);
                     d.Date = format.parse(d.Date);
                     // Assign x and y variables for import into chart
-                    d.x = d.Date;
+                    d.key = d.Date;
                     d.y = +d.Value; // + changes value to a number
                     // Track max value of dataset
                     if (d.y > datasetMax) { datasetMax = d.y }
@@ -67,10 +91,10 @@ angular.module("Renzu", ['nvd3ChartDirectives', 'ngRoute'])
                         right: 100
                     })
                     .x(function(d) {
-                        return d.x
+                        return d.key
                     }) //We can modify the data accessor functions...
                     .y(function(d) {
-                        return d.y
+                        return d.values
                     }) //...in case your data is formatted differently.
                     // .useInteractiveGuideline(true) //Tooltips which show all data points. Very nice!
                     // .rightAlignYAxis(true) //Let's move the y-axis to the right side.
