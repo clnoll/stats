@@ -1,15 +1,13 @@
-<div class="container">
-    <h1 id="chartTitle">App Usage</h1>
-    <h2 id="chartSubtitle">8/2013 - 9/2014</h2>
-</div>
 <div class="container" ng-controller="allDAUCtrl">
-    <h2 id="chartSubtitle">{{metricOptions.selectedMetric}} by {{filterOptions.selectedFilter}}</h2>
+    <div class="container">
+        <h1 id="chartTitle">App Stats 8/2013 - 9/2014</h1>
+    </div>
 
     <form class="form-inline">
-        <div id="floating-menu">View by...
-            <div class="row radio-inline" ng-repeat="filter in filterOptions.filters">
-                <input id="radio" type="radio" ng-model="filterOptions.selectedFilter" ng-value="filter" name="filter">
-                <label class="radio-inline" for="{{filter}}">{{filter}}
+        <div id="view-menu">Stats by
+            <div class="view-menu" ng-repeat="filter in filterOptions.filters">
+                <input class="view-menu" type="radio" ng-model="filterOptions.selectedFilter" ng-value="filter" name="filter">
+                <label for="{{filter}}">{{filter}}
                 </label>
             </div>
         </div>

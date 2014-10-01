@@ -7,32 +7,18 @@
   background-color: black;
   width: 100%
 }
-#radio {
-  margin-left: 500px;
-}
 #chartTitle {
   color: #428bca
   font-family: 'Varela';
   float: center;
 }
-#floating-menu {
-  position:fixed;
-  font-style: italic;
-  border:1px solid gray;
-  background-color: white;
-  width:100px;
-  right: 25px;
-  top: 90px;
-}
-.radio-inline {
+.view-menu {
+  // position:relative;
   display: inline;
-  padding-right: 10px;
-  margin-left: 10px;
-  margin-top: 0px;
-  padding-top: 0px;
-}
-#radio {
-  margin-left: 5px;
+  padding: 5px
+  font-style: italic;
+  background-color: white;
+  // width:100px;
 }
 #chart {
   margin-left: 20px;
@@ -42,4 +28,10 @@
 }
 h2 {
   font-size: 15px;
+}
+.col-md-6 {
+    width: 50%;
+    float: left;
+    display: inline;
+    border: 1px solid blue;
 }
