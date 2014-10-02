@@ -4,9 +4,9 @@
     <div class="row-fluid">
         <div class="span12">
             <div class="row-fluid">
-
                 <div class="span8">
                     <form class="form-inline">
+                        <!-- Radio buttons -->
                         <div id="view-menu">Stats by
                             <div class="view-menu" ng-repeat="filter in filterOptions.filters">
                                 <input class="view-menu" type="radio" ng-model="filterOptions.selectedFilter" ng-value="filter" name="filter">
@@ -15,18 +15,21 @@
                             </div>
                         </div>
                     </form>
+                    <!-- Line charts - cumulative -->
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div id="dau-chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                                <svg id="dau-chart"></svg>
+                            </div>
 
-                    <div id="dau-chart" data="subsetVals" showXAxis="true" showYAxis="true">
-                        <svg id="dau-chart"></svg>
-                    </div>
-
-                    <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true">
-                        <svg id="retention-chart"></svg>
+                            <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                                <svg id="retention-chart"></svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="span4">
-                    <!-- <div class="container-fluid"> -->
-                    <!-- <div class="span12"> -->
+                    <!-- Detail charts -->
                     <div class="row-fluid">
                         <div class="span4">
                             <div class="nvd3-pie-chart1" id="chart">
@@ -61,9 +64,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- </div> -->
             </div>
         </div>
-
     </div>
+</div>

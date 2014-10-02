@@ -50,7 +50,7 @@ app.controller('allDAUCtrl', ['$scope',
                     // Set dimensions for aggregate charts
                     var dimensions = {
                         'width': 600,
-                        'height': 200
+                        'height': 300
                     }
 
                     // Filter dataset to return Retention
@@ -76,11 +76,13 @@ app.controller('allDAUCtrl', ['$scope',
                         return d.Date
                     })
 
+                    // Format date for line chart labels
                     var dateLabels = function(d) {
                         str = d3.time.format('%m/%Y')(new Date(d))
                         return str.substr(0, 3) + str.substr(5);
                     }
 
+                    // Format nested data prior to rollup, for cumulative charts
                     var entriesFxn = function(d) {
                         // Parse date values to JavaScript date object
                         var format = d3.time.format("%m/%d/%Y");
@@ -97,6 +99,7 @@ app.controller('allDAUCtrl', ['$scope',
                         return d;
                     }
 
+                    // Format nested data prior to rollup, for detail charts
                     var entriesDetailFxn = function(d) {
                         if (d.Metric === "DAU") {
                             d.y = +d.Value;
@@ -131,9 +134,6 @@ app.controller('allDAUCtrl', ['$scope',
                         // Use NVD3 library to add Line Chart for cumulative app use
                         nv.addGraph(function() {
                             var chart = nv.models.lineChart()
-                                .margin({
-                                    right: 100
-                                })
                                 .x(function(d) {
                                     return new Date(d.key)
                                 })
@@ -160,8 +160,8 @@ app.controller('allDAUCtrl', ['$scope',
 
                             d3.select('#dau-chart svg')
                                 .datum(chartDAUData)
-                                .call(chart)
-                                .style(dimensions);
+                                .style(dimensions)
+                                .call(chart);
 
                             nv.utils.windowResize(chart.update);
                             return chart;
@@ -187,9 +187,6 @@ app.controller('allDAUCtrl', ['$scope',
                         // Use NVD3 library to add Line Chart for cumulative app use
                         nv.addGraph(function() {
                             var chart = nv.models.lineChart()
-                                .margin({
-                                    right: 100
-                                })
                                 .x(function(d) {
                                     return new Date(d.key)
                                 })
@@ -216,8 +213,8 @@ app.controller('allDAUCtrl', ['$scope',
 
                             d3.select('#retention-chart svg')
                                 .datum(chartRetentionData)
-                                .call(chart)
-                                .style(dimensions);
+                                .style(dimensions)
+                                .call(chart);
 
                             nv.utils.windowResize(chart.update);
 
