@@ -319,7 +319,7 @@ app.controller('allDAUCtrl', ['$scope',
                         nv.addGraph(function() {
                             var chart = nv.models.bulletChart();
 
-                            d3.select('.nvd3-bullet-chart2')
+                            d3.select('.nvd3-bullet-chart' + i)
                                 .append('svg')
                                 .attr('class', 'nvd3-bullet-chart1')
                                 .datum(exampleData())
@@ -339,7 +339,7 @@ app.controller('allDAUCtrl', ['$scope',
                             chart.x(function(d) { return d.x; });
                             chart.y(function(d) { return d.y; });
 
-                            d3.select('.nvd3-bullet-chart' + i)
+                            d3.select('.nvd3-bar-chart' + i)
                               .append('svg')
                               .attr('class', 'nvd3-bar-chart1')
                               .datum(barStats)
