@@ -224,6 +224,7 @@ app.controller('allDAUCtrl', ['$scope',
                     var getDauDetails = function(dataset) {
                         // Create stats object to house data for charts
                         var stats = {
+                                app: dataset[0].App,
                                 totalDAU: 0,
                                 minDailyValue: 0,
                                 maxDailyValue: 0,
@@ -297,10 +298,13 @@ app.controller('allDAUCtrl', ['$scope',
 
                             d3.select('.nvd3-bullet-chart' + i)
                                 .append('svg')
-                                .attr('class', 'nvd3-bullet-chart' + i)
+                                .attr('class', 'nvd3-bullet-chart1')
                                 .datum(exampleData())
-                                .transition().duration(1000)
+                                .transition()
+                                .duration(1000)
                                 .call(chart);
+
+                            nv.utils.windowResize(chart.update);
 
                             return chart;
                         });
@@ -336,7 +340,7 @@ app.controller('allDAUCtrl', ['$scope',
 
                             d3.select('.nvd3-bar-chart' + i)
                               .append('svg')
-                              .attr('class', 'nvd3-bar-chart' + i)
+                              .attr('class', 'nvd3-bar-chart1')
                               .datum(barStats)
                               .transition()
                               .duration(500)
@@ -363,7 +367,7 @@ app.controller('allDAUCtrl', ['$scope',
 
                             d3.select(".nvd3-pie-chart" + i)
                                 .append('svg')
-                                .attr('class', 'nvd3-pie-chart' + i)
+                                .attr('class', 'nvd3-pie-chart1')
                                 .datum(chartDAUData)
                                 .transition().duration(350)
                                 .call(pieChart);
@@ -381,18 +385,13 @@ app.controller('allDAUCtrl', ['$scope',
                             };
                         }
 
-                        i += 1
+                        i+= 1
                     }
 
                     // Call functions to create the overview charts
                     getDau(dataset);
                     getRetention(retention);
-                    // for (app in $scope.appOptions.apps) {
-                    //     var dataset = dataset.filter(function(row) {
-                    //         return row['App'] == $scope.appOptions.apps[parseInt(app)];
-                    //     });
-                    //     getDauDetails(dataset);
-                    // }
+
                     var canData = dataset.filter(function(row) {
                         return row['App'] == 'CandyBash';
                     });
@@ -417,7 +416,27 @@ app.controller('allDAUCtrl', ['$scope',
                     //         $scope.appOptions = {
                     //     apps: ['CandyBash', 'Words with Enemies', 'Crappy Birds', 'Zuber', 'Carry']
                     // }
-
+                    // $scope.$apply(function() {
+                    //     $(document).ready(function() {
+                    //         var seen = {}
+                    //         console.log('hey')
+                    //         $('.nvd3-bullet-chart').each(
+                    //             function() {
+                    //             var duplicate =
+                    //             console.log('hi')
+                    //             seen[this.attr('class')] += 1;
+                    //             if (seen[this.class > 1]) { ('.nvd3-bullet-chart').remove(); }
+                    //         });
+                    //         $('.nvd3-bar-chart').each(function() {
+                    //             seen[this.attr('class')] += 1;
+                    //             if (seen[this.class > 1]) { ('.nvd3-bar-chart').remove(); }
+                    //         });
+                    //         $('.nvd3-pie-chart').each(function() {
+                    //             seen[this.attr('class')] += 1;
+                    //             if (seen[this.class > 1]) { ('.nvd3-pie-chart').remove(); }
+                    //         });
+                    //     });
+                    // })
 
                     // Removes duplicate DOM elements on watch event
                     $scope.$apply(function() {
