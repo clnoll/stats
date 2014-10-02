@@ -296,7 +296,7 @@ app.controller('allDAUCtrl', ['$scope',
 
                         barStats = [
                             { key: 'iOS',
-                              color: "#7C95FC",
+                              color: "#3B7A57",
                               values: [
                                 { x: 'Min DAU', y: stats.iOSMinDailyValue },
                                 { x: 'Max DAU', y: stats.iOSMaxDailyValue },
@@ -304,7 +304,7 @@ app.controller('allDAUCtrl', ['$scope',
                               ]
                             },
                             { key: 'Android',
-                              color: "#FCE37C",
+                              color: "#AB274F",
                               values: [
                                 { x: 'Min DAU', y: stats.androidMinDailyValue },
                                 { x: 'Max DAU', y: stats.androidMaxDailyValue },
@@ -316,43 +316,44 @@ app.controller('allDAUCtrl', ['$scope',
                             // Global variable to increment class
                         var i = 1
                             // Generate bullet chart
-                        // nv.addGraph(function() {
-                        //     var chart = nv.models.bulletChart();
-                        //     d3.select('.nvd3-bullet-chart' + i)
-                        //         .append('svg')
-                        //         .attr('class', 'nvd3-bullet-chart1')
-                        //         .datum(exampleData())
-                        //         .transition().duration(1000)
-                        //         .call(chart);
+                        nv.addGraph(function() {
+                            var chart = nv.models.bulletChart();
 
-                        //     return chart;
-                        // });
-nv.addGraph(function() {
-    var chart = nv.models.multiBarChart();
+                            d3.select('.nvd3-bullet-chart2')
+                                .append('svg')
+                                .attr('class', 'nvd3-bullet-chart1')
+                                .datum(exampleData())
+                                .transition().duration(1000)
+                                .call(chart);
 
-    // chart.xAxis
-    //     .tickFormat(d3.format(',f'));
+                            return chart;
+                        });
 
-    chart.yAxis
-        .tickFormat(d3.format(','));
+                        // Generate stacked bar chart
+                        nv.addGraph(function() {
+                            var chart = nv.models.multiBarChart();
 
-    chart.x(function(d) { return d.x; });
-    chart.y(function(d) { return d.y; });
+                            chart.yAxis
+                                .tickFormat(d3.format(','));
 
-    d3.select('.nvd3-bullet-chart' + i)
-      .append('svg')
-      .datum(barStats)
-      .transition()
-      .duration(500)
-      .call(chart);
+                            chart.x(function(d) { return d.x; });
+                            chart.y(function(d) { return d.y; });
 
-    nv.utils.windowResize(chart.update);
+                            d3.select('.nvd3-bullet-chart' + i)
+                              .append('svg')
+                              .attr('class', 'nvd3-bar-chart1')
+                              .datum(barStats)
+                              .transition()
+                              .duration(500)
+                              .call(chart);
 
-    return chart;
-});
+                            nv.utils.windowResize(chart.update);
+
+                            return chart;
+                        });
                         // Generate pie chart
                         nv.addGraph(function() {
-                            var myColors = ["#7C95FC", "#FCE37C"]
+                            var myColors = ["#3B7A57", "#AB274F"]
                             d3.scale.myColors = function() { return d3.scale.ordinal().range(myColors); };
 
                             var pieChart = nv.models.pieChart()
@@ -412,6 +413,7 @@ nv.addGraph(function() {
                     $scope.$apply(function() {
                         $(document).ready(function() {
                             $('.nvd3-bullet-chart1').remove();
+                            $('.nvd3-bar-chart1').remove();
                             $('.nvd3-pie-chart1').remove();
                         });
                     })
