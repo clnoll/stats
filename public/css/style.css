@@ -1,7 +1,7 @@
 * {
   color: #428bca
   font-family: 'Varela';
-  border-color: red;
+  border: 1px solid red;
 }
 .container {
   width: 100%;
@@ -24,13 +24,12 @@
   background-color: white;
   margin: 10px;
 }
-.span6 {
-  width: 50%;
-  display: inline;
+.span8 {
+  // width: 70%;
+  display: inline-flex;
 }
-.span3 {
-  width: 30%;
-  display: inline;
+.span4 {
+  display: inline-flex;
 }
 #chart {
   display: inline;
