@@ -6,6 +6,7 @@ app.config(function($routeProvider) {
     // route for the display page
         .when('/', {
             templateUrl: 'partials/display.html',
+            // controller: 'allDAUCtrl'
         })
         .when('/detail', {
             templateUrl: 'partials/appDetails.html',
@@ -13,8 +14,8 @@ app.config(function($routeProvider) {
         })
 })
 
-app.controller('allDAUCtrl', ['$scope', 'nestFunction',
-    function($scope, nestFunction) {
+app.controller('allDAUCtrl', ['$scope',
+    function($scope) {
         // Set filter options - outside of D3 due to asynchronicity
         $scope.filterOptions = {
             filters: ['App', 'Category', 'Platform'],
@@ -37,6 +38,8 @@ app.controller('allDAUCtrl', ['$scope', 'nestFunction',
                 initializing = false;
                 return;
             }
+
+            // scope.filterOptions.selectedFilter = newVal;
 
             // Pull in csv file with d3
             d3.csv('resources/challenge-dataset.csv', function(dataset) {
@@ -290,23 +293,68 @@ app.controller('allDAUCtrl', ['$scope', 'nestFunction',
                         stats.maxDailyValue = stats.iOSMaxDailyValue + stats.androidMaxDailyValue;
                         stats.meanDailyValue = parseInt((stats.minDailyValue + stats.maxDailyValue) / 2)
                         stats.latestValue = stats.iOSLatest + stats.androidLatest
+
+                        barStats = [
+                            { key: 'iOS',
+                              color: "#7C95FC",
+                              values: [
+                                { x: 'Min DAU', y: stats.iOSMinDailyValue },
+                                { x: 'Max DAU', y: stats.iOSMaxDailyValue },
+                                { x: 'Most Recent DAU', y: stats.iOSLatest }
+                              ]
+                            },
+                            { key: 'Android',
+                              color: "#FCE37C",
+                              values: [
+                                { x: 'Min DAU', y: stats.androidMinDailyValue },
+                                { x: 'Max DAU', y: stats.androidMaxDailyValue },
+                                { x: 'Most Recent DAU', y: stats.androidLatest }
+                              ]
+                            }
+                        ]
+
                             // Global variable to increment class
                         var i = 1
                             // Generate bullet chart
-                        nv.addGraph(function() {
-                            var chart = nv.models.bulletChart();
-                            d3.select('.nvd3-bullet-chart' + i)
-                                .append('svg')
-                                .attr('class', 'nvd3-bullet-chart1')
-                                .datum(exampleData())
-                                .transition().duration(1000)
-                                .call(chart);
+                        // nv.addGraph(function() {
+                        //     var chart = nv.models.bulletChart();
+                        //     d3.select('.nvd3-bullet-chart' + i)
+                        //         .append('svg')
+                        //         .attr('class', 'nvd3-bullet-chart1')
+                        //         .datum(exampleData())
+                        //         .transition().duration(1000)
+                        //         .call(chart);
 
-                            return chart;
-                        });
+                        //     return chart;
+                        // });
+nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
 
+    // chart.xAxis
+    //     .tickFormat(d3.format(',f'));
+
+    chart.yAxis
+        .tickFormat(d3.format(','));
+
+    chart.x(function(d) { return d.x; });
+    chart.y(function(d) { return d.y; });
+
+    d3.select('.nvd3-bullet-chart' + i)
+      .append('svg')
+      .datum(barStats)
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+});
                         // Generate pie chart
                         nv.addGraph(function() {
+                            var myColors = ["#7C95FC", "#FCE37C"]
+                            d3.scale.myColors = function() { return d3.scale.ordinal().range(myColors); };
+
                             var pieChart = nv.models.pieChart()
                                 .x(function(d) {
                                     return d.key
@@ -314,7 +362,8 @@ app.controller('allDAUCtrl', ['$scope', 'nestFunction',
                                 .y(function(d) {
                                     return d.values
                                 })
-                                .showLabels(true);
+                                .showLabels(true)
+                                .color(myColors);
 
                             d3.select(".nvd3-pie-chart" + i)
                                 .append('svg')
