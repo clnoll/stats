@@ -1,7 +1,7 @@
 * {
   color: #428bca
   font-family: 'Varela';
-  border: 1px solid red;
+  // border: 1px solid red;
 }
 .container {
   width: 100%;
@@ -49,19 +49,19 @@ h2 {
   display: inline;
 }
 .nvd3-bullet-chart1 {
-  background-color: gray;
+  // background-color: gray;
   padding: 10px;
   display: inline;
   // width: 95%
 }
 .nvd3-bar-chart1 {
-  background-color: gray;
+  // background-color: gray;
   padding: 10px;
   display: inline;
   // width: 55%;
 }
 .nvd3-pie-chart1 {
-  background-color: gray;
+  // background-color: gray;
   padding: 10px;
   display: inline;
   // width: 40%;
