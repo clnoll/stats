@@ -6,7 +6,6 @@ app.config(function($routeProvider) {
     // route for the display page
         .when('/', {
             templateUrl: 'partials/display.html',
-            controller: 'allDAUCtrl'
         })
         .when('/detail', {
             templateUrl: 'partials/appDetails.html',
@@ -28,7 +27,6 @@ app.controller('allDAUCtrl', ['$scope', 'nestFunction',
         $scope.appOptions = {
             apps: ['CandyBash', 'Words with Enemies', 'Crappy Birds', 'Zuber', 'Carry']
         }
-        $scope.seen = {};
 
         // Assign filter to the scope by watching changes to the $scope.filterOptions object
         $scope.$watch("filterOptions.selectedFilter", function(newVal, oldVal, scope) {
@@ -39,8 +37,6 @@ app.controller('allDAUCtrl', ['$scope', 'nestFunction',
                 initializing = false;
                 return;
             }
-
-            // scope.filterOptions.selectedFilter = newVal;
 
             // Pull in csv file with d3
             d3.csv('resources/challenge-dataset.csv', function(dataset) {
@@ -341,8 +337,6 @@ app.controller('allDAUCtrl', ['$scope', 'nestFunction',
                         }
 
                         i += 1
-
-
                     }
 
                     // Call functions to create the overview charts
@@ -365,35 +359,12 @@ app.controller('allDAUCtrl', ['$scope', 'nestFunction',
                     // }
 
 
-                    // $('.nvd3-bullet-chart').remove();
-                    // $('.nvd3-pie-chart').remove();
+                    // Removes duplicate DOM elements on watch event
                     $scope.$apply(function() {
                         $(document).ready(function() {
-                            console.log('hi')
-                            console.log($('.nvd3-bullet-chart1').length)
-                            $('.nvd3-bullet-chart1').each(function() {
-                                var txt = $(this).attr('class');
-                                if ($scope.seen[txt]) {
-                                    $(this).remove();
-                                    console.log("?");
-                                } else {
-                                    $scope.seen[txt] = true;
-                                    console.log("!");
-                                }
-
-                            });
-                            $('.nvd3-pie-chart1').each(function() {
-                                var txt = $(this).attr('class');
-                                if ($scope.seen[txt]) {
-                                    $(this).remove();
-                                    console.log("?");
-                                } else {
-                                    $scope.seen[txt] = true;
-                                    console.log("!");
-                                }
-
-                            });
-                        })
+                            $('.nvd3-bullet-chart1').remove();
+                            $('.nvd3-pie-chart1').remove();
+                        });
                     })
                 }) // closes scope.watch
         })
