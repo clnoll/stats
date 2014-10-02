@@ -32,8 +32,6 @@ app.controller('allDAUCtrl', ['$scope',
         // Assign filter to the scope by watching changes to the $scope.filterOptions object
         $scope.$watch("filterOptions.selectedFilter", function(newVal, oldVal, scope) {
             var initializing = true
-            console.log(newVal)
-            console.log(oldVal)
             if (newVal === oldVal && !initializing) {
                 initializing = false;
                 return;
@@ -234,7 +232,7 @@ app.controller('allDAUCtrl', ['$scope',
                                 androidMinDailyValue: 0,
                                 androidMaxDailyValue: 0
                             }
-                            // Reorganize data by platform
+                        // Reorganize data by platform
                         var nestFunction = d3.nest().key(function(d) {
                             val = parseInt(d.Value)
                             if (d.Platform === "iOS") {
@@ -291,8 +289,6 @@ app.controller('allDAUCtrl', ['$scope',
                         stats.meanDailyValue = parseInt((stats.minDailyValue + stats.maxDailyValue) / 2)
                         stats.latestValue = stats.iOSLatest + stats.androidLatest
 
-
-
                         // Global variable to increment class
                         var i = 1
                         // Generate bullet chart
@@ -301,7 +297,7 @@ app.controller('allDAUCtrl', ['$scope',
 
                             d3.select('.nvd3-bullet-chart' + i)
                                 .append('svg')
-                                .attr('class', 'nvd3-bullet-chart1')
+                                .attr('class', 'nvd3-bullet-chart' + i)
                                 .datum(exampleData())
                                 .transition().duration(1000)
                                 .call(chart);
@@ -311,24 +307,22 @@ app.controller('allDAUCtrl', ['$scope',
 
                         // Generate stacked bar chart
                         nv.addGraph(function() {
-                        barStats = [
-                            { key: 'iOS',
-                              color: "#3B7A57",
-                              values: [
-                                { x: 'Min DAU', y: stats.iOSMinDailyValue },
-                                { x: 'Max DAU', y: stats.iOSMaxDailyValue },
-                                { x: 'Most Recent DAU', y: stats.iOSLatest }
-                              ]
-                            },
-                            { key: 'Android',
-                              color: "#AB274F",
-                              values: [
-                                { x: 'Min DAU', y: stats.androidMinDailyValue },
-                                { x: 'Max DAU', y: stats.androidMaxDailyValue },
-                                { x: 'Most Recent DAU', y: stats.androidLatest }
-                              ]
-                            }
-                        ]
+                            barStats = [
+                                { key: 'iOS',
+                                  color: "#3B7A57",
+                                  values: [
+                                    { x: 'Min DAU', y: stats.iOSMinDailyValue },
+                                    { x: 'Max DAU', y: stats.iOSMaxDailyValue },
+                                    { x: 'Most Recent DAU', y: stats.iOSLatest }
+                                  ]},
+                                { key: 'Android',
+                                  color: "#AB274F",
+                                  values: [
+                                    { x: 'Min DAU', y: stats.androidMinDailyValue },
+                                    { x: 'Max DAU', y: stats.androidMaxDailyValue },
+                                    { x: 'Most Recent DAU', y: stats.androidLatest }
+                                  ]
+                                }]
 
                             var chart = nv.models.multiBarChart();
 
@@ -338,12 +332,11 @@ app.controller('allDAUCtrl', ['$scope',
                             chart.x(function(d) {
                                 return d.x; });
                             chart.y(function(d) {
-                                console.log("X:" + d.x + "   Y:" + d.y + "Series:" + d.series);
                                 return d.y; });
 
                             d3.select('.nvd3-bar-chart' + i)
                               .append('svg')
-                              .attr('class', 'nvd3-bar-chart1')
+                              .attr('class', 'nvd3-bar-chart' + i)
                               .datum(barStats)
                               .transition()
                               .duration(500)
@@ -370,7 +363,7 @@ app.controller('allDAUCtrl', ['$scope',
 
                             d3.select(".nvd3-pie-chart" + i)
                                 .append('svg')
-                                .attr('class', 'nvd3-pie-chart1')
+                                .attr('class', 'nvd3-pie-chart' + i)
                                 .datum(chartDAUData)
                                 .transition().duration(350)
                                 .call(pieChart);
