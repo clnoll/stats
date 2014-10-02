@@ -3,7 +3,7 @@
         <h1 id="chartTitle">App Stats 8/2013 - 9/2014</h1>
         <hr>
     </div>
-<div class=".col-xs-12 .col-sm-6 .col-lg-8">
+<div class="span5">
     <form class="form-inline">
         <div id="view-menu">Stats by
             <div class="view-menu" ng-repeat="filter in filterOptions.filters">
@@ -23,16 +23,19 @@
     </div>
 </div>
 
+<div class="span4">
+<div class="container-fluid">
+    <div class="span12">
     <div class="nvd3-pie-chart1" id="chart"></div>
-    </div>
-    <div class="nvd3-bullet-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true"></div>
-    </div>
     <div class="nvd3-bar-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
     </div>
+    </div>
+    <div class="nvd3-bullet-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true"></div>
 
     <div class="nvd3-pie-chart2" id="chart"></div>
-    </div>
-    <div class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true"></div>
-    </div>
     <div class="nvd3-bar-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
     </div>
+    <div class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true"></div>
+</div>
+</div>
+</div>

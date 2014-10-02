@@ -1,29 +1,32 @@
 * {
   color: #428bca
   font-family: 'Varela';
+  border-color: red;
+}
+.container {
+  width: 100%;
 }
 
 #navcontainer {
   background-color: black;
-  width: 100%
+  width: 100%;
 }
 #chartTitle {
-  color: #428bca
+  color: #428bca;
   font-family: 'Varela';
   float: center;
   margin: 10px
 }
 .view-menu {
-  // position:relative;
   display: inline;
-  padding: 5px
+  padding: 5px;
   font-style: italic;
   background-color: white;
   margin: 10px;
-  // width:100px;
 }
 #chart {
   margin-left: 20px;
+  display: inline;
 }
 .nvtooltip * {
   font-size: 11px;
@@ -41,28 +44,29 @@ h2 {
   background-color: gray;
   padding: 10px;
   display: inline;
-  width: 50%
+  width: 100%
 }
 .nvd3-bar-chart1 {
   background-color: gray;
   padding: 10px;
   display: inline;
-  width: 50%
+  width: 55%;
 }
 .nvd3-pie-chart1 {
   background-color: gray;
   padding: 10px;
   display: inline;
-  width: 25%
+  width: 40%;
 }
 #line-dau {
-  width: 60%
-  display: inline
+  width: 60%;
+  display: inline;
 }
 #line-r {
-  width: 60%
-  display: inline
+  width: 60%;
+  display: inline;
 }
-.container.ng-scope {
-
+.container-fluid {
+  width: 300px;
+  display: inline;
 }
