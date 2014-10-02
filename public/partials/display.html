@@ -1,41 +1,69 @@
-<div class="container" ng-controller="allDAUCtrl">
-    <div class="container">
-        <h1 id="chartTitle">App Stats 8/2013 - 9/2014</h1>
-        <hr>
-    </div>
-<div class="span5">
-    <form class="form-inline">
-        <div id="view-menu">Stats by
-            <div class="view-menu" ng-repeat="filter in filterOptions.filters">
-                <input class="view-menu" type="radio" ng-model="filterOptions.selectedFilter" ng-value="filter" name="filter">
-                <label for="{{filter}}">{{filter}}
-                </label>
+<div class="container-fluid" ng-controller="allDAUCtrl">
+    <h1 id="chartTitle">App Stats 8/2013 - 9/2014</h1>
+    <hr>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="row-fluid">
+
+                <div class="span8">
+                    <form class="form-inline">
+                        <div id="view-menu">Stats by
+                            <div class="view-menu" ng-repeat="filter in filterOptions.filters">
+                                <input class="view-menu" type="radio" ng-model="filterOptions.selectedFilter" ng-value="filter" name="filter">
+                                <label for="{{filter}}">{{filter}}
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="dau-chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                        <svg id="dau-chart"></svg>
+                    </div>
+
+                    <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                        <svg id="retention-chart"></svg>
+                    </div>
+                </div>
+                <div class="span4">
+                    <!-- <div class="container-fluid"> -->
+                    <!-- <div class="span12"> -->
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <div class="nvd3-pie-chart1" id="chart">
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <div class="nvd3-bar-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="nvd3-bullet-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <div class="nvd3-pie-chart2" id="chart">
+                            </div>
+                        </div>
+                        <div class="span8">
+                            <div class="nvd3-bar-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- </div> -->
             </div>
         </div>
-    </form>
 
-    <div id="dau-chart" data="subsetVals" showXAxis="true" showYAxis="true" >
-        <svg></svg>
     </div>
-
-    <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true" >
-        <svg></svg>
-    </div>
-</div>
-
-<div class="span4">
-<div class="container-fluid">
-    <div class="span12">
-    <div class="nvd3-pie-chart1" id="chart"></div>
-    <div class="nvd3-bar-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
-    </div>
-    </div>
-    <div class="nvd3-bullet-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true"></div>
-
-    <div class="nvd3-pie-chart2" id="chart"></div>
-    <div class="nvd3-bar-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
-    </div>
-    <div class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true"></div>
-</div>
-</div>
-</div>

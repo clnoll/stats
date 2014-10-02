@@ -313,9 +313,9 @@ app.controller('allDAUCtrl', ['$scope',
                             }
                         ]
 
-                            // Global variable to increment class
+                        // Global variable to increment class
                         var i = 1
-                            // Generate bullet chart
+                        // Generate bullet chart
                         nv.addGraph(function() {
                             var chart = nv.models.bulletChart();
 

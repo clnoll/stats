@@ -24,8 +24,15 @@
   background-color: white;
   margin: 10px;
 }
+.span6 {
+  width: 50%;
+  display: inline;
+}
+.span3 {
+  width: 30%;
+  display: inline;
+}
 #chart {
-  margin-left: 20px;
   display: inline;
 }
 .nvtooltip * {
@@ -34,39 +41,32 @@
 h2 {
   font-size: 15px;
 }
-.col-md-6 {
-    width: 50%;
-    float: left;
-    display: inline;
-    border: 1px solid blue;
+#dau-chart {
+  // width: 70%;
+  display: inline;
+}
+#retention-chart {
+  // width: 70%;
+  display: inline;
 }
 .nvd3-bullet-chart1 {
   background-color: gray;
   padding: 10px;
   display: inline;
-  width: 100%
+  // width: 95%
 }
 .nvd3-bar-chart1 {
   background-color: gray;
   padding: 10px;
   display: inline;
-  width: 55%;
+  // width: 55%;
 }
 .nvd3-pie-chart1 {
   background-color: gray;
   padding: 10px;
   display: inline;
-  width: 40%;
+  // width: 40%;
 }
-#line-dau {
-  width: 60%;
-  display: inline;
-}
-#line-r {
-  width: 60%;
-  display: inline;
-}
-.container-fluid {
-  width: 300px;
-  display: inline;
+svg {
+  // width: 100%
 }
