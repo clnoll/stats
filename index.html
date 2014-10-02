@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <!-- define angular app -->
-<html ng-app="Renzu">
+<html ng-app="RenzuApp">
 
 <head>
     <meta charset="utf-8">
@@ -24,13 +24,16 @@
     <script src="./js/vendor/nvd3/nv.d3.js"></script>
     <script src="./js/vendor/d3/d3.js"></script>
     <script src="./js/application.js"></script>
+    <script src="./js/scripts/getCsv.js"></script>
+    <script src="./js/scripts/nestFxn.js"></script>
+
 
     <style>
     svg text {font-size: 11px;}
     </style>
 </head>
 
-<body class="body">
+<body class="body" initialise>
     <nav class="navbar navbar-default">
         <div class="container" id="navcontainer">
             <div class="navbar-header" id="logo">
@@ -54,7 +57,6 @@
         <div ng-view></div>
 
     </div>
-
 </body>
 
 </html>
