@@ -291,24 +291,7 @@ app.controller('allDAUCtrl', ['$scope',
                         stats.meanDailyValue = parseInt((stats.minDailyValue + stats.maxDailyValue) / 2)
                         stats.latestValue = stats.iOSLatest + stats.androidLatest
 
-                        barStats = [
-                            { key: 'iOS',
-                              color: "#3B7A57",
-                              values: [
-                                { x: 'Min DAU', y: stats.iOSMinDailyValue },
-                                { x: 'Max DAU', y: stats.iOSMaxDailyValue },
-                                { x: 'Most Recent DAU', y: stats.iOSLatest }
-                              ]
-                            },
-                            { key: 'Android',
-                              color: "#AB274F",
-                              values: [
-                                { x: 'Min DAU', y: stats.androidMinDailyValue },
-                                { x: 'Max DAU', y: stats.androidMaxDailyValue },
-                                { x: 'Most Recent DAU', y: stats.androidLatest }
-                              ]
-                            }
-                        ]
+
 
                         // Global variable to increment class
                         var i = 1
@@ -328,13 +311,35 @@ app.controller('allDAUCtrl', ['$scope',
 
                         // Generate stacked bar chart
                         nv.addGraph(function() {
+                        barStats = [
+                            { key: 'iOS',
+                              color: "#3B7A57",
+                              values: [
+                                { x: 'Min DAU', y: stats.iOSMinDailyValue },
+                                { x: 'Max DAU', y: stats.iOSMaxDailyValue },
+                                { x: 'Most Recent DAU', y: stats.iOSLatest }
+                              ]
+                            },
+                            { key: 'Android',
+                              color: "#AB274F",
+                              values: [
+                                { x: 'Min DAU', y: stats.androidMinDailyValue },
+                                { x: 'Max DAU', y: stats.androidMaxDailyValue },
+                                { x: 'Most Recent DAU', y: stats.androidLatest }
+                              ]
+                            }
+                        ]
+
                             var chart = nv.models.multiBarChart();
 
                             chart.yAxis
                                 .tickFormat(d3.format(','));
 
-                            chart.x(function(d) { return d.x; });
-                            chart.y(function(d) { return d.y; });
+                            chart.x(function(d) {
+                                return d.x; });
+                            chart.y(function(d) {
+                                console.log("X:" + d.x + "   Y:" + d.y + "Series:" + d.series);
+                                return d.y; });
 
                             d3.select('.nvd3-bar-chart' + i)
                               .append('svg')
@@ -395,11 +400,26 @@ app.controller('allDAUCtrl', ['$scope',
                     //     });
                     //     getDauDetails(dataset);
                     // }
-                    var cbData = dataset.filter(function(row) {
+                    var canData = dataset.filter(function(row) {
                         return row['App'] == 'CandyBash';
                     });
-
-                    getDauDetails(cbData);
+                    var wweData = dataset.filter(function(row) {
+                        return row['App'] == 'Words With Enemies';
+                    });
+                    var craData = dataset.filter(function(row) {
+                        return row['App'] == 'Crappy Birds';
+                    });
+                    var zubData = dataset.filter(function(row) {
+                        return row['App'] == 'Zuber';
+                    });
+                    var carData = dataset.filter(function(row) {
+                        return row['App'] == 'Carry';
+                    });
+                    getDauDetails(canData);
+                    getDauDetails(wweData);
+                    getDauDetails(craData);
+                    getDauDetails(zubData);
+                    getDauDetails(carData);
 
                     //         $scope.appOptions = {
                     //     apps: ['CandyBash', 'Words with Enemies', 'Crappy Birds', 'Zuber', 'Carry']
