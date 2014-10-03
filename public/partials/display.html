@@ -2,9 +2,8 @@
     <h1 id="chartTitle">App Stats 8/2013 - 9/2014</h1>
     <hr>
 
-    <div class="row-fluid col-md-8">
+    <div class="row-fluid col-md-12 col-sm-12 col-lg-12">
         <!-- <div class="span12"> -->
-
             <!-- Radio buttons -->
             <div class="row-fluid">
                 <div class="span12">
@@ -19,111 +18,58 @@
                     </form>
                 </div>
             </div>
-
+        <div class="col-lg-5 col-md-5 col-sm-5">
             <!-- Charts -->
             <div class="row-fluid">
-                <div class="span12">
-
-                    <div class="row-fluid">
-                        <!-- Line charts - cumulative -->
-                        <div class="span8 col-md-8">
-                            <div class="row-fluid">
-                                <div class="span12">
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <div id="dau-chart" data="subsetVals" showXAxis="true" showYAxis="true">
-                                                <svg id="dau-chart"></svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true">
-                                                <svg id="retention-chart"></svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- Line charts - cumulative -->
+                <div id="dau-chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                    <svg id="dau-chart"></svg>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div id="retention-chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                    <svg id="retention-chart"></svg>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-7">
+            <!-- <div class="col-md-4 col-sm-4"> -->
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="nvd3-pie-chart2" id="chart">
                             </div>
                         </div>
+                    </div>
+                    <div class="span4">
 
-                        <!-- Detail charts -->
-                        <div class="row-fluid col-md-4">
-                            <!-- <div class="row-fluid"> -->
-                                <!-- <div class="span12"> -->
-                                    <div class="row-fluid">
-                                        <!-- Pie chart -->
-                                        <div class="span4 col-xs-6 col-md-4">
-                                            <div class="row-fluid">
-                                                <div class="span12">
-                                                    <div class="nvd3-pie-chart1" id="chart">
-                                                    </div>
-                                                    <div pie-chart></div>
-                                                    <div id="pie-chart-div"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Bar chart -->
-                                        <div class="span4 col-xs-6 col-md-4">
-                                            <div class="row-fluid">
-                                                <div class="span12">
-                                                    <div class="nvd3-bar-chart1" id="chart">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Bullet chart -->
-                                        <div class="span4 col-xs-6 col-md-4">
-                                            <div class="row-fluid">
-                                                <div class="span12">
-                                                    <div class="nvd3-bullet-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- </div> -->
-                        <!-- </div> -->
-
-
-                            <!-- <div class="row-fluid"> -->
-                                <!-- <div class="span12"> -->
-                                    <div class="row-fluid">
-                                        <!-- Pie chart -->
-                                        <div class="span4 col-xs-6 col-md-4">
-                                            <div class="row-fluid">
-                                                <div class="span12">
-                                                    <div class="nvd3-pie-chart2" id="chart">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Bar chart -->
-                                        <div class="span4 col-xs-6 col-md-4">
-                                            <div class="row-fluid">
-                                                <div class="span12">
-                                                    <div class="nvd3-bar-chart2" id="chart">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                <!-- Bullet chart -->
-                                       <div class="span4 col-xs-6 col-md-4">
-                                            <div class="row-fluid">
-                                                <div class="span12">
-                                                    <div class="nvd3-bullet-chart1" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="nvd3-bar-chart2" id="chart">
                             </div>
+                        </div>
+                    </div>
+                    <div class="span4">
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
+
+git filter-branch -f --env-filter '
+if [ "GIT_COMMITTER_NAME" = "DJ Daniels" ];
+then GIT_COMMITTER_NAME="clnoll";
+GIT_COMMITTER_EMAIL="noll.catherine@gmail.com";
+GIT_AUTHOR_NAME="clnoll";
+GIT_AUTHOR_EMAIL="noll.catherine@gmail.com";
+fi
+' -- --all
+
+
+
