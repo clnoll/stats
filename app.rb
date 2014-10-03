@@ -6,7 +6,7 @@ require_relative 'lib/renzu.rb'
 #     c.set :bind, '10.10.10.10'
 #   end
 
-  set :bind, '10.10.10.10'
+  # set :bind, '10.10.10.10'
 
   get '/' do
     send_file 'index.html'
