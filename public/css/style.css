@@ -14,7 +14,11 @@
 .container {
   width: 100%;
 }
-
+.svg {
+  padding: 0px;
+  color: white
+  margin: 0px;
+}
 #navcontainer {
   background-color: black;
   width: 100%;
@@ -25,9 +29,7 @@
   float: center;
   margin: 10px
 }
-#details {
-  background-color: black;
-}
+
 .view-menu {
   display: inline;
   padding: 5px;
@@ -60,7 +62,8 @@ h2 {
   display: inline;
 }
 #details {
-  background-color: black;
+  background-color: gray;
+  color: white;
 }
 // .nvd3-bullet-chart1 {
 //   // background-color: gray;

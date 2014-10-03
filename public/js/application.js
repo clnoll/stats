@@ -377,8 +377,8 @@ app.controller('allDAUCtrl', ['$scope',
 
                         function exampleData() {
                             return {
-                                "title": "DAU",
-                                "subtitle": "8/2013 - 9/2014",
+                                "title": "",
+                                "subtitle": "DAU",
                                 "ranges": [stats.minDailyValue, stats.meanDailyValue, stats.maxDailyValue], //Minimum, mean and maximum values.
                                 "measures": [stats.maxDailyValue], //Value representing current measurement (the thick blue line in the example)
                                 "markers": [stats.latestValue] //Place a marker on the chart (the white triangle marker)
@@ -437,17 +437,3 @@ app.controller('allDAUCtrl', ['$scope',
         $scope.$apply();
     })
 })
-
-
-
-// App.directive 'resizable', ($window) ->
-//   ($scope) ->
-//     $scope.initializeWindowSize = ->
-//       $scope.windowHeight = $window.innerHeight
-//       $scope.windowWidth  = $window.innerWidth
-
-//     $scope.initializeWindowSize()
-
-//     angular.element($window).bind 'resize', ->
-//       $scope.initializeWindowSize()
-//       $scope.$apply()
