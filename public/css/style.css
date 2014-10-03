@@ -1,7 +1,7 @@
 * {
-  color: #428bca
-  font-family: 'Varela';
-  border: 1px solid red;
+  // color: black;
+  // font-family: 'Varela';
+  // border: 1px solid red;
 }
 [ng\:cloak],
 [ng-cloak],
@@ -14,9 +14,8 @@
 .container {
   width: 100%;
 }
-.svg {
+svg {
   padding: 0px;
-  color: white
   margin: 0px;
 }
 #navcontainer {
@@ -24,8 +23,8 @@
   width: 100%;
 }
 #chartTitle {
-  color: #428bca;
-  font-family: 'Varela';
+  color: black;
+  font-family: 'Lato', sans-serif;
   float: center;
   margin: 10px
 }
@@ -34,7 +33,7 @@
   display: inline;
   padding: 5px;
   font-style: italic;
-  background-color: white;
+  // background-color: white;
   margin: 10px;
 }
 .span8 {
@@ -52,6 +51,7 @@
 }
 h2 {
   font-size: 15px;
+  font-weight: bold;
 }
 #dau-chart {
   // width: 70%;
@@ -63,26 +63,24 @@ h2 {
 }
 #details {
   background-color: gray;
-  color: white;
+  // color: white;
+  margin-right: -20px;
 }
-// .nvd3-bullet-chart1 {
-//   // background-color: gray;
-//   padding: 10px;
-//   display: inline;
-//   // width: 95%
-// }
-// .nvd3-bar-chart1 {
-//   // background-color: gray;
-//   padding: 10px;
-//   display: inline;
-//   // width: 55%;
-// }
-// .nvd3-pie-chart1 {
-//   // background-color: gray;
-//   padding: 10px;
-//   display: inline;
-//   // width: 40%;
-// }
+.nvd3-bullet-chart1 * {
+  float: left;
+}
+.nvd3-bar-chart1 * {
+  float: left;
+}
+.nvd3-pie-chart1 * {
+  float: left;
+}
 svg {
-  width: 100%
+  float: left
+  display: inline
+  // width: 100%
+}
+h2 {
+  font-family: 'Lato', sans-serif;
+  text-align: center
 }

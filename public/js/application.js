@@ -47,8 +47,8 @@ app.controller('allDAUCtrl', ['$scope',
 
                     // Set dimensions for aggregate charts
                     var dimensions = {
-                        'width': 600,
-                        'height': 300
+                        'width': 550,
+                        'height': 350
                     };
 
                     // Filter dataset to return Retention
@@ -292,6 +292,7 @@ app.controller('allDAUCtrl', ['$scope',
 
                         // Global variable to increment class
                         var i = 1;
+
                         // Generate bullet chart
                         nv.addGraph(function() {
                             var chart = nv.models.bulletChart();
@@ -315,28 +316,29 @@ app.controller('allDAUCtrl', ['$scope',
                                 { key: 'iOS',
                                   color: "#3B7A57",
                                   values: [
-                                    { x: 'Min DAU', y: stats.iOSMinDailyValue },
-                                    { x: 'Max DAU', y: stats.iOSMaxDailyValue },
-                                    { x: 'Most Recent DAU', y: stats.iOSLatest }
+                                    { x: 'Min', y: stats.iOSMinDailyValue/1000000 },
+                                    { x: 'Max', y: stats.iOSMaxDailyValue/1000000 },
+                                    { x: 'Latest', y: stats.iOSLatest/1000000 }
                                   ]},
                                 { key: 'Android',
                                   color: "#AB274F",
                                   values: [
-                                    { x: 'Min DAU', y: stats.androidMinDailyValue },
-                                    { x: 'Max DAU', y: stats.androidMaxDailyValue },
-                                    { x: 'Most Recent DAU', y: stats.androidLatest }
+                                    { x: 'Min', y: stats.androidMinDailyValue/1000000 },
+                                    { x: 'Max', y: stats.androidMaxDailyValue/1000000 },
+                                    { x: 'Latest', y: stats.androidLatest/1000000 }
                                   ]
                                 }];
 
                             var chart = nv.models.multiBarChart();
 
                             chart.yAxis
-                                .tickFormat(d3.format(','));
+                                .tickFormat(d3.format(',.1f'));
 
                             chart.x(function(d) {
                                 return d.x; });
                             chart.y(function(d) {
                                 return d.y; });
+                            chart.showLegend(false);
 
                             d3.select('.nvd3-bar-chart' + i)
                               .append('svg')
@@ -377,11 +379,11 @@ app.controller('allDAUCtrl', ['$scope',
 
                         function exampleData() {
                             return {
-                                "title": "",
-                                "subtitle": "DAU",
-                                "ranges": [stats.minDailyValue, stats.meanDailyValue, stats.maxDailyValue], //Minimum, mean and maximum values.
-                                "measures": [stats.maxDailyValue], //Value representing current measurement (the thick blue line in the example)
-                                "markers": [stats.latestValue] //Place a marker on the chart (the white triangle marker)
+                                "title": stats.app,
+                                "subtitle": "DAU (m)",
+                                "ranges": [stats.minDailyValue/1000000, stats.meanDailyValue/1000000, stats.maxDailyValue/1000000], //Minimum, mean and maximum values.
+                                "measures": [stats.maxDailyValue/1000000], //Value representing current measurement (the thick blue line in the example)
+                                "markers": [stats.latestValue/1000000] //Place a marker on the chart (the white triangle marker)
                             };
                         }
 
@@ -412,6 +414,8 @@ app.controller('allDAUCtrl', ['$scope',
                     getDauDetails(craData);
                     getDauDetails(zubData);
                     getDauDetails(carData);
+
+                    var tooltip = d3.select("div.tooltip");
 
                     // Removes duplicate DOM elements on watch event
                     $scope.$apply(function() {
