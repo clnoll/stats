@@ -25,6 +25,9 @@
   float: center;
   margin: 10px
 }
+#details {
+  background-color: black;
+}
 .view-menu {
   display: inline;
   padding: 5px;
@@ -55,6 +58,9 @@ h2 {
 #retention-chart {
   // width: 70%;
   display: inline;
+}
+#details {
+  background-color: black;
 }
 // .nvd3-bullet-chart1 {
 //   // background-color: gray;
