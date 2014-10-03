@@ -1,4 +1,4 @@
-var app = angular.module("RenzuApp", ['nvd3ChartDirectives', 'ngRoute'])
+var app = angular.module("RenzuApp", ['nvd3ChartDirectives', 'ngRoute']);
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -11,8 +11,8 @@ app.config(function($routeProvider) {
         .when('/detail', {
             templateUrl: 'partials/appDetails.html',
             controller: 'detailAppDataCtrl'
-        })
-})
+        });
+});
 
 app.controller('allDAUCtrl', ['$scope',
     function($scope) {
@@ -20,18 +20,18 @@ app.controller('allDAUCtrl', ['$scope',
         $scope.filterOptions = {
             filters: ['App', 'Category', 'Platform'],
             selectedFilter: 'App'
-        }
+        };
         $scope.metricOptions = {
             metrics: ['D1 Retention', 'DAU'],
             selectedMetric: 'DAU'
-        }
+        };
         $scope.appOptions = {
             apps: ['CandyBash', 'Words with Enemies', 'Crappy Birds', 'Zuber', 'Carry']
-        }
+        };
 
         // Assign filter to the scope by watching changes to the $scope.filterOptions object
         $scope.$watch("filterOptions.selectedFilter", function(newVal, oldVal, scope) {
-            var initializing = true
+            var initializing = true;
             if (newVal === oldVal && !initializing) {
                 initializing = false;
                 return;
@@ -49,7 +49,7 @@ app.controller('allDAUCtrl', ['$scope',
                     var dimensions = {
                         'width': 600,
                         'height': 300
-                    }
+                    };
 
                     // Filter dataset to return Retention
                     var retention = dataset.filter(function(row) {
@@ -71,14 +71,14 @@ app.controller('allDAUCtrl', ['$scope',
                             return d.Platform;
                         }
                     }).key(function(d) {
-                        return d.Date
-                    })
+                        return d.Date;
+                    });
 
                     // Format date for line chart labels
                     var dateLabels = function(d) {
-                        str = d3.time.format('%m/%Y')(new Date(d))
+                        str = d3.time.format('%m/%Y')(new Date(d));
                         return str.substr(0, 3) + str.substr(5);
-                    }
+                    };
 
                     // Format nested data prior to rollup, for cumulative charts
                     var entriesFxn = function(d) {
@@ -91,39 +91,39 @@ app.controller('allDAUCtrl', ['$scope',
                         if (d.Metric === "DAU") {
                             d.y = +d.Value;
                         } else if (d.Metric === "D1 Retention") {
-                            var str = d.Value
-                            d.y = +(str.substring(0, str.length - 1)) // remove % sign and change string to numerical value
+                            var str = d.Value;
+                            d.y = +(str.substring(0, str.length - 1)); // remove % sign and change string to numerical value
                         }
                         return d;
-                    }
+                    };
 
                     // Format nested data prior to rollup, for detail charts
                     var entriesDetailFxn = function(d) {
                         if (d.Metric === "DAU") {
                             d.y = +d.Value;
                         } else if (d.Metric === "D1 Retention") {
-                            var str = d.Value
-                            d.x = d.Platform
-                            d.y = +(str.substring(0, str.length - 1)) // remove % sign and change string to numerical value
+                            var str = d.Value;
+                            d.x = d.Platform;
+                            d.y = +(str.substring(0, str.length - 1)); // remove % sign and change string to numerical value
                         }
                         return d;
-                    }
+                    };
 
                     // Function to get DAU charts
                     var getDau = function(dataset) {
-                        var datasetMax = 0
+                        var datasetMax = 0;
                             // Sum values by category and date
                         var rollup = nestFunction.rollup(function(d) {
                             return d3.sum(d, function(g) {
-                                return +g.y
-                            })
+                                return +g.y;
+                            });
                         });
 
                         // Map data to nested App
                         var chartDAUData = rollup.entries(
                             dataset.map(function(d) {
                                 if (d.y > datasetMax) {
-                                    datasetMax = d.y
+                                    datasetMax = d.y;
                                 }
                                 return entriesFxn(d);
                             })
@@ -133,10 +133,10 @@ app.controller('allDAUCtrl', ['$scope',
                         nv.addGraph(function() {
                             var chart = nv.models.lineChart()
                                 .x(function(d) {
-                                    return new Date(d.key)
+                                    return new Date(d.key);
                                 })
                                 .y(function(d) {
-                                    return d.values
+                                    return d.values;
                                 })
                                 .useInteractiveGuideline(true)
                                 .clipEdge(true);
@@ -154,7 +154,7 @@ app.controller('allDAUCtrl', ['$scope',
                                 // .axisLabelDistance(100)
                                 .tickFormat(d3.format(',f'))
                                 .scale()
-                                .domain([0, datasetMax])
+                                .domain([0, datasetMax]);
 
                             d3.select('#dau-chart svg')
                                 .datum(chartDAUData)
@@ -164,15 +164,15 @@ app.controller('allDAUCtrl', ['$scope',
                             nv.utils.windowResize(chart.update);
                             return chart;
                         });
-                    }
+                    };
 
                     // Function to get Retention charts
                     var getRetention = function(dataset) {
                         // Get avg percentages by category and date
                         var rollup = nestFunction.rollup(function(d) {
                             return d3.mean(d, function(g) {
-                                return +g.y
-                            })
+                                return +g.y;
+                            });
                         });
 
                         // Map data to nested App
@@ -186,10 +186,10 @@ app.controller('allDAUCtrl', ['$scope',
                         nv.addGraph(function() {
                             var chart = nv.models.lineChart()
                                 .x(function(d) {
-                                    return new Date(d.key)
+                                    return new Date(d.key);
                                 })
                                 .y(function(d) {
-                                    return d.values
+                                    return d.values;
                                 })
                                 .useInteractiveGuideline(true)
                                 .clipEdge(true);
@@ -207,7 +207,7 @@ app.controller('allDAUCtrl', ['$scope',
                                 // .axisLabelDistance(100)
                                 .tickFormat(d3.format(',f'))
                                 .scale()
-                                .domain([0, 100])
+                                .domain([0, 100]);
 
                             d3.select('#retention-chart svg')
                                 .datum(chartRetentionData)
@@ -218,7 +218,7 @@ app.controller('allDAUCtrl', ['$scope',
 
                             return chart;
                         });
-                    }
+                    };
 
                     // Function to get DAU detail charts (by App)
                     var getDauDetails = function(dataset) {
@@ -232,10 +232,10 @@ app.controller('allDAUCtrl', ['$scope',
                                 iOSMaxDailyValue: 0,
                                 androidMinDailyValue: 0,
                                 androidMaxDailyValue: 0
-                            }
+                            };
                         // Reorganize data by platform
                         var nestFunction = d3.nest().key(function(d) {
-                            val = parseInt(d.Value)
+                            val = parseInt(d.Value);
                             if (d.Platform === "iOS") {
                                 if (stats.iOSMinDailyValue == 0 || val < stats.iOSMinDailyValue) {
                                     stats.iOSMinDailyValue = val;
@@ -252,24 +252,24 @@ app.controller('allDAUCtrl', ['$scope',
                                 }
                             }
                             return d.Platform;
-                        })
+                        });
 
                         // Sum values by category
                         var rollup = nestFunction.rollup(function(d) {
                             if (d[d.length - 1].Platform === "iOS") {
-                                stats.iOSLatest = parseInt(d[d.length - 1].Value)
+                                stats.iOSLatest = parseInt(d[d.length - 1].Value);
                             } else if (d[d.length - 1].Platform === "Android") {
-                                stats.androidLatest = parseInt(d[d.length - 1].Value)
+                                stats.androidLatest = parseInt(d[d.length - 1].Value);
                             }
                             if (d[d.length - 2].Platform === "iOS") {
-                                stats.iOSLatest = parseInt(d[d.length - 1].Value)
+                                stats.iOSLatest = parseInt(d[d.length - 1].Value);
                             } else if (d[d.length - 2].Platform === "Android") {
-                                stats.androidLatest = parseInt(d[d.length - 2].Value)
+                                stats.androidLatest = parseInt(d[d.length - 2].Value);
                             }
 
                             return d3.sum(d, function(g) {
                                 return +g.y;
-                            })
+                            });
                         });
 
                         // Map data to nested App
@@ -280,18 +280,18 @@ app.controller('allDAUCtrl', ['$scope',
                         );
 
                         // Calculate stats
-                        for (item in chartDAUData) {
+                        for (var item in chartDAUData) {
                             var objKey = chartDAUData[item].key;
                             stats[objKey] = chartDAUData[item].values;
                             stats.totalDAU += chartDAUData[item].values;
                         }
                         stats.minDailyValue = stats.iOSMinDailyValue + stats.androidMinDailyValue;
                         stats.maxDailyValue = stats.iOSMaxDailyValue + stats.androidMaxDailyValue;
-                        stats.meanDailyValue = parseInt((stats.minDailyValue + stats.maxDailyValue) / 2)
-                        stats.latestValue = stats.iOSLatest + stats.androidLatest
+                        stats.meanDailyValue = parseInt((stats.minDailyValue + stats.maxDailyValue) / 2);
+                        stats.latestValue = stats.iOSLatest + stats.androidLatest;
 
                         // Global variable to increment class
-                        var i = 1
+                        var i = 1;
                         // Generate bullet chart
                         nv.addGraph(function() {
                             var chart = nv.models.bulletChart();
@@ -326,7 +326,7 @@ app.controller('allDAUCtrl', ['$scope',
                                     { x: 'Max DAU', y: stats.androidMaxDailyValue },
                                     { x: 'Most Recent DAU', y: stats.androidLatest }
                                   ]
-                                }]
+                                }];
 
                             var chart = nv.models.multiBarChart();
 
@@ -352,15 +352,15 @@ app.controller('allDAUCtrl', ['$scope',
                         });
                         // Generate pie chart
                         nv.addGraph(function() {
-                            var myColors = ["#3B7A57", "#AB274F"]
+                            var myColors = ["#3B7A57", "#AB274F"];
                             d3.scale.myColors = function() { return d3.scale.ordinal().range(myColors); };
 
                             var pieChart = nv.models.pieChart()
                                 .x(function(d) {
-                                    return d.key
+                                    return d.key;
                                 })
                                 .y(function(d) {
-                                    return d.values
+                                    return d.values;
                                 })
                                 .showLabels(true)
                                 .color(myColors);
@@ -385,8 +385,8 @@ app.controller('allDAUCtrl', ['$scope',
                             };
                         }
 
-                        i+= 1
-                    }
+                        i+= 1;
+                    };
 
                     // Call functions to create the overview charts
                     getDau(dataset);
@@ -445,8 +445,8 @@ app.controller('allDAUCtrl', ['$scope',
                             $('.nvd3-bar-chart1').remove();
                             $('.nvd3-pie-chart1').remove();
                         });
-                    })
-                }) // closes scope.watch
-        })
+                    });
+                }); // closes scope.watch
+        });
     }
-])
+]);
