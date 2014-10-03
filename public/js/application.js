@@ -413,31 +413,6 @@ app.controller('allDAUCtrl', ['$scope',
                     getDauDetails(zubData);
                     getDauDetails(carData);
 
-                    //         $scope.appOptions = {
-                    //     apps: ['CandyBash', 'Words with Enemies', 'Crappy Birds', 'Zuber', 'Carry']
-                    // }
-                    // $scope.$apply(function() {
-                    //     $(document).ready(function() {
-                    //         var seen = {}
-                    //         console.log('hey')
-                    //         $('.nvd3-bullet-chart').each(
-                    //             function() {
-                    //             var duplicate =
-                    //             console.log('hi')
-                    //             seen[this.attr('class')] += 1;
-                    //             if (seen[this.class > 1]) { ('.nvd3-bullet-chart').remove(); }
-                    //         });
-                    //         $('.nvd3-bar-chart').each(function() {
-                    //             seen[this.attr('class')] += 1;
-                    //             if (seen[this.class > 1]) { ('.nvd3-bar-chart').remove(); }
-                    //         });
-                    //         $('.nvd3-pie-chart').each(function() {
-                    //             seen[this.attr('class')] += 1;
-                    //             if (seen[this.class > 1]) { ('.nvd3-pie-chart').remove(); }
-                    //         });
-                    //     });
-                    // })
-
                     // Removes duplicate DOM elements on watch event
                     $scope.$apply(function() {
                         $(document).ready(function() {

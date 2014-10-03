@@ -32,34 +32,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-7 col-md-7 col-sm-7">
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="nvd3-pie-chart2" id="chart">
-                <div pie-chart></div>
-                <div id="pie-chart-div"></div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="nvd3-bar-chart2" id="chart">
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <div class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+        <!-- Detail charts -->
+        <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+            <div class="row-fluid-md row-fluid-sm row-fluid-sx">
+                <div class="span4-md span4-sm span4-xs">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <div ng-cloak class="nvd3-pie-chart2" id="chart">
+                        </div>
+                    </div>
+                    <div class="span4-md span4-sm span4-xs">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div ng-cloak class="nvd3-bar-chart2" id="chart">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4-md span4-sm span4-xs">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div ng-cloak class="nvd3-bullet-chart2" id="chart" data="subsetVals" showXAxis="true" showYAxis="true">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-git filter-branch -f --env-filter '
-if [ "GIT_COMMITTER_NAME" = "DJ Daniels" ];
-then GIT_COMMITTER_NAME="clnoll";
-GIT_COMMITTER_EMAIL="noll.catherine@gmail.com";
-GIT_AUTHOR_NAME="clnoll";
-GIT_AUTHOR_EMAIL="noll.catherine@gmail.com";
-fi
-' -- --all
 
 
 
