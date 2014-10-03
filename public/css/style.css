@@ -48,24 +48,24 @@ h2 {
   // width: 70%;
   display: inline;
 }
-.nvd3-bullet-chart1 {
-  // background-color: gray;
-  padding: 10px;
-  display: inline;
-  // width: 95%
-}
-.nvd3-bar-chart1 {
-  // background-color: gray;
-  padding: 10px;
-  display: inline;
-  // width: 55%;
-}
-.nvd3-pie-chart1 {
-  // background-color: gray;
-  padding: 10px;
-  display: inline;
-  // width: 40%;
-}
+// .nvd3-bullet-chart1 {
+//   // background-color: gray;
+//   padding: 10px;
+//   display: inline;
+//   // width: 95%
+// }
+// .nvd3-bar-chart1 {
+//   // background-color: gray;
+//   padding: 10px;
+//   display: inline;
+//   // width: 55%;
+// }
+// .nvd3-pie-chart1 {
+//   // background-color: gray;
+//   padding: 10px;
+//   display: inline;
+//   // width: 40%;
+// }
 svg {
   width: 100%
 }
