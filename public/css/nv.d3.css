@@ -95,7 +95,6 @@
   border-spacing:0;
 }
 
-
 .nvtooltip table td {
   padding: 2px 9px 2px 0;
   vertical-align: middle;
@@ -554,21 +553,21 @@ svg .title {
 *  Bullet
 */
 
-.nvd3.nv-bullet { font: 10px sans-serif; }
-.nvd3.nv-bullet .nv-measure { fill-opacity: .8; }
-.nvd3.nv-bullet .nv-measure:hover { fill-opacity: 1; }
+.nvd3.nv-bullet { font: 10px sans-serif; fill: black; }
+.nvd3.nv-bullet .nv-measure { fill: black; }
+// .nvd3.nv-bullet .nv-measure:hover { fill-opacity: 1; }
 .nvd3.nv-bullet .nv-marker { stroke: #000; stroke-width: 2px; }
 .nvd3.nv-bullet .nv-markerTriangle { stroke: #000; fill: #fff; stroke-width: 1.5px; }
 .nvd3.nv-bullet .nv-tick line { stroke: #666; stroke-width: .5px; }
-.nvd3.nv-bullet .nv-range.nv-s0 { fill: #eee; }
-.nvd3.nv-bullet .nv-range.nv-s1 { fill: #ddd; }
-.nvd3.nv-bullet .nv-range.nv-s2 { fill: #ccc; }
+.nvd3.nv-bullet .nv-range.nv-s0 { fill: black; }
+.nvd3.nv-bullet .nv-range.nv-s1 { fill: black; }
+.nvd3.nv-bullet .nv-range.nv-s2 { fill: black; }
 .nvd3.nv-bullet .nv-title { font-size: 20px; font-weight: bold; }
 .nvd3.nv-bullet .nv-subtitle { fill: #999; }
 
 
 .nvd3.nv-bullet .nv-range {
-  fill: #bababa;
+  fill: black;
   fill-opacity: .4;
 }
 .nvd3.nv-bullet .nv-range:hover {
@@ -580,6 +579,7 @@ svg .title {
   // display: none;
   // font-size: 0px;
 }
+.bullet .measure.s0 { fill: black; }
 
 /**********
 * Sparkline

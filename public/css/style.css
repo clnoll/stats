@@ -1,8 +1,9 @@
 * {
   // color: black;
-  // font-family: 'Varela';
+  font-family: 'Lato', sans-serif;
   // border: 1px solid red;
 }
+
 [ng\:cloak],
 [ng-cloak],
 [data-ng-cloak],
@@ -21,12 +22,15 @@ svg {
 #navcontainer {
   background-color: black;
   width: 100%;
+  color: #B8A8CE;
 }
 #chartTitle {
-  color: black;
+  color: #4B2D73;
   font-family: 'Lato', sans-serif;
   float: center;
-  margin: 10px
+  margin: 10px;
+  text-align: center;
+  background-color: #E5E2E9;
 }
 
 .view-menu {
@@ -35,6 +39,9 @@ svg {
   font-style: italic;
   // background-color: white;
   margin: 10px;
+}
+.nv-measure {
+  fill:  black;
 }
 .span8 {
   // width: 70%;
@@ -48,18 +55,6 @@ svg {
 }
 .nvtooltip * {
   font-size: 11px;
-}
-h2 {
-  font-size: 15px;
-  font-weight: bold;
-}
-#dau-chart {
-  // width: 70%;
-  display: inline;
-}
-#retention-chart {
-  // width: 70%;
-  display: inline;
 }
 #details {
   background-color: gray;
@@ -75,12 +70,24 @@ h2 {
 .nvd3-pie-chart1 * {
   float: left;
 }
-svg {
-  float: left
-  display: inline
-  // width: 100%
-}
 h2 {
   font-family: 'Lato', sans-serif;
-  text-align: center
+  text-align: center;
+  // color: #4B2D73;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #E5E2E9;
+}
+// .col-lg-7.col-md-12.col-sm-12.col-xs-12 * {
+//   background-color: #A8A5AD;
+// }
+.row-fluid.col-md-12.col-sm-12.col-lg-12 {
+  // background-color: #E5E2E9;
+}
+.container-fluid.ng-scope * {
+  // background-color: black;
+}
+form {
+  // color: #4B2D73;
+  font-weight: bold;
 }

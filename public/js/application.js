@@ -314,14 +314,14 @@ app.controller('allDAUCtrl', ['$scope',
                         nv.addGraph(function() {
                             barStats = [
                                 { key: 'iOS',
-                                  color: "#3B7A57",
+                                  color: "#A865CD",
                                   values: [
                                     { x: 'Min', y: stats.iOSMinDailyValue/1000000 },
                                     { x: 'Max', y: stats.iOSMaxDailyValue/1000000 },
                                     { x: 'Latest', y: stats.iOSLatest/1000000 }
                                   ]},
                                 { key: 'Android',
-                                  color: "#AB274F",
+                                  color: "#FFFF78",
                                   values: [
                                     { x: 'Min', y: stats.androidMinDailyValue/1000000 },
                                     { x: 'Max', y: stats.androidMaxDailyValue/1000000 },
@@ -354,7 +354,7 @@ app.controller('allDAUCtrl', ['$scope',
                         });
                         // Generate pie chart
                         nv.addGraph(function() {
-                            var myColors = ["#3B7A57", "#AB274F"];
+                            var myColors = ["#A865CD", "#FFFF78"];
                             d3.scale.myColors = function() { return d3.scale.ordinal().range(myColors); };
 
                             var pieChart = nv.models.pieChart()
